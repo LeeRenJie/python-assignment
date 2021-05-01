@@ -1,0 +1,5 @@
+SCRS1 admin1
+SCRS2 admin2
+SCRS3 admin3
+SCRS4 admin4
+SCRS5 admin5

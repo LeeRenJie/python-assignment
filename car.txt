@@ -1,0 +1,5 @@
+car1,prius prime,yes,none,none,none,color:red horsepower:213
+car2,ford ranger,no,lee yee hau,2000,5,color:black horsepower:213
+car3,alza,yes,none,none,none,color:black horsepower:213
+car4,mercedes,yes,chiang juo han,3000,8,color:black horsepower:213
+car5,myvi,no,lee ren jie,1000,2,color:black horsepower:213
