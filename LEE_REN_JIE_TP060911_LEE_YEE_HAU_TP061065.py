@@ -7,8 +7,8 @@
 Functionalities of Admin
 
 i. Login to Access System.
-ii. Add Cars to be rented out.
-iii. Modify Car Details
+ii. Add Cars to be rented out. ** 
+iii. Modify Car Details **
 iv. Display All records of
 a. Cars Rented Out
 b. Cars available for Rent
@@ -21,8 +21,8 @@ vi. Return a Rented Car.
 vii. Exit
 
 Functionalities of All Customers (Registered / Not-Registered)
-i. View all cars available for rent.
-ii. New customer Register to Access other Details
+i. View all cars available for rent. **
+ii. New customer Register to Access other Details ** 
 iii. Exit
 
 Functionalities of Registered Customer
@@ -36,156 +36,418 @@ vii. Exit
 '''
 #python assignment demo
 import sys
+from time import sleep
 from datetime import date
+
 def main_menu():
     print(date.today())
-    print("\n[1]Login to Access System")
-    print("[2]New Customer Register")
-    print("[3]View All Cars available for rent")
-    print("[4]Exit\n")
+    print('''
+    -------Who are you?-------\n
+    [1]Customer
+    [2]Admin
+    [3]Exit]\n
+    ''')
 
-    option = int(input("Please Enter Your Option :"))
-    
-
+    option = input("Please Enter Your Option :")
 
     while True:
-        if option == 1:
-            ask_identity()
+        if option == "1":
+            customer_menu()
             break
-
-        elif option == 2:
-            new_register()
+        elif option == "2":
+            login_admin()
             break
-
-        elif option == 3:
-            view_car_available()
-            break
-    
-        elif option == 4:
+        elif option == "3":
             sys.exit()
-    
+        
         else:
-            option = int(input("Please Enter Your Option :"))
+            option = input("Please Enter Your Option :")
 
+#--------------------------------------ADMIN DATA OPERATIONS----------------------------------------
+# Read data
+admin_data = open("admin.txt", "r")
+lines = admin_data.readlines()
+admin_id = []
+admin_pass = []
 
-#login as an admin
-def login_admin():
-    # might need to global both variable but assignment dont allow
-    id_num = input("Please Enter Your ID :")
-    password1 = input("Please Enter Your Password :")
+for admin in lines:
+    admin_list = admin.split(" ")
+    admin_id.append(admin_list[0])
+    admin_pass.append(admin_list[1].replace("\n", ""))
 
-    admin_checkdata()
+#----------------------------------CUSTOMER DATA OPERATIONS-------------------------------------------------
+# Read data
+customer_data = open("customer.txt", "r")
+lines = customer_data.readlines()
+customer_id = []
+customer_pass = []
+customer_name = []
+car_name = []
+customer_payment = []
+customer_duration = []
 
-#login as a customer
+for customer in lines:
+    customer_list = customer.split(",")
+    customer_id.append(customer_list[0])
+    customer_pass.append(customer_list[1])
+    customer_name.append(customer_list[2])
+    car_name.append(customer_list[3])
+    customer_payment.append(customer_list[4])
+    customer_duration.append(customer_list[5].replace("\n", ""))
+
+#----------------------------------CAR DATA OPERATIONS-------------------------------------------------------
+# Read data
+cars_data = open("car.txt", "r")
+lines = cars_data.readlines()
+car_id = []
+car_name = []
+car_available = []
+booking_customer = []
+booking_payment = []
+booking_duration = []
+car_details = []
+
+for car in lines:
+    car_list = car.split(",")
+    car_id.append(car_list[0])
+    car_name.append(car_list[1])
+    car_available.append(car_list[2])
+    booking_customer.append(car_list[3])
+    booking_payment.append(car_list[4])
+    booking_duration.append(car_list[5])
+    car_details.append(car_list[6].replace("\n", ""))
+
+def customer_menu():
+    print('''
+    -------Welcome!-------\n
+    [1]Login as a Customer
+    [2]Register as a new Customer
+    [3]View All Cars Available for rent
+    [4]Back to Main Menu\n
+    ''')
+
+    option2 = input("Please Enter Your Option :")
+
+    if option2 == "1":
+        login_customer()
+    elif option2 == "2":
+        new_customer()
+    elif option2 == "3":
+        view_car_available()
+    else:
+        main_menu()
+
+#i.	Login to Access System 
 def login_customer():
-    #might need to global both variable but assignment dont allow
-    id_num = input("Please Enter Your ID :")
+
+    id_num2 = input("Please Enter Your ID :")
     password2 = input("Please Enter Your Password :")
 
-    customer_checkdata()
-
-#check the id of the admin and provide feature for admin
-def admin_checkdata():
-    #create an empty list
-    data = []
-    #loop through each individual data inside the txt and append into our list as an element
-    file_data = open("data.txt","r+")
-    data = file_data.readlines()
-
-    if id_num and password in data:
-        print("Welcome !")
-        print("[1]Add cars to be rented out")
-        print("[2]Modify Car details")
-        print("[3]Display All records")
-        print("[4]Search Specified Record")
-        print("[5]Return a rented Car")
-        print("[6]Return to Main Menu")
-        option2 = int(input("Enter Your Option :"))
-        while True:
-            if option2 == 1:
-                break
-
-            elif option2 == 2:
-                break
-
-            elif option2 == 3:
-                break
     
-            elif option2 == 4:
-                break
-            
-            elif option2 == 5:
-                break
-
-            elif option2 == 6:
-                break
-
-    
+    for i in range(len(customer_id)):
+        if id_num2 == customer_id[i]:
+            if password2 == customer_pass[i]:
+                registered_customer_menu()
             else:
-                option2 = int(input("Please Enter Your Option :"))
+                continue
+        else:
+            continue
+                
+    print('''Error Id or Password detected
+    >>> returning back to Customer Menu . . .''')
+    customer_menu()
 
 
-
-
-    elif id_num and password not in data:
-        print("Error id or password detected")
-        ask_identity()
-    
-    else:
-        print("Couldn't identify info, returning to Main menu...")
-        main_menu()
-
-#check customer data and give customer feature
-def customer_checkdata():
-    #create an empty list
-    data = []
-    #loop through each individual data inside the txt and append into our list as an element
-    file_data = open("data.txt","r+")
-    data = file_data.readlines()
-    if id_num and password in data:
-        print("Welcome !")
-        print()
-
-    elif id_num and password not in data:
-        print("Error id or password detected")
-        ask_identity()
-    
-    else:
-        print("Couldn't identify info, returning to Main menu...")
-        main_menu()
-
-#check the identity of the user
-def ask_identity():
-    print("\n[1]Registered Customer")
-    print("[2]Admin")
-    print("Type Anything else to return to Main Menu")
-
-    identity = int(input("Please Enter Your Option :"))
-    if identity == 1:
-        login_customer()
-    elif identity == 2:
-        login_admin()
-            
-    else:
-        main_menu()
-
-#function to register as a new user
-def new_register():
-    f = open("customer.txt")
-    new_data = f.readlines()
-    data_name = input("Your Name :")
-    data_age = input("Your Age :")
-    new_data.append(data_name)
-    new_data.append(data_age)
-    f.writelines(new_data)
+#ii.	New customer Register to Access other Details (RJ)
+def new_customer():
+    f = open("customer.txt", "a+")
+    customer_data = f.readlines()
+    #input
+    #need add auto id
+    new_ctm_id = input("New Customer ID(eg: ctm1):")
+    new_ctm_pass = input("Your Password:")
+    new_ctm_name = input("Your Name:")
+    #append to car_data list
+    customer_data.append(new_ctm_id + ",")
+    customer_data.append(new_ctm_pass + ",")
+    customer_data.append(new_ctm_name + ",")
+    customer_data.append("none,none,none\n")
+    f.writelines(customer_data)
     f.close()
+    customer_menu()
+
+#i.	View all cars available for rent + Display all records of b. Cars available for Rent
+def view_car_available():
+    for i in range(len(car_data)):
+        if car_available[i] == "yes":
+            print(car_id[i])
+            print(car_name[i])
+            print(car_details[i])
+    
+           
+#after login as a customer, menu
+def registered_customer_menu():
+    print('''
+    [1]Modify Personal Details
+    [2]View Personal Rental History
+    [3]View Details of Cars to be rented out
+    [3]Select and Book a car for a specific duration
+    [4]Do Payment to comfirm booking
+    [5]Return to Main Menu
+    [6]Exit\n
+    ''')
+
+
+def login_admin():
+    id_num1 = input("Please Enter Your ID :")
+    password1 = input("Please Enter Your Password :")
+    
+    for i in range(len(admin_id)):
+        if id_num1 == admin_id[i]:
+            if password1 == admin_pass[i]:
+                admin_menu()
+
+
+    print('''
+    Error ID or Password detected
+    returning back to main menu . . .
+    ''')
     main_menu()
 
-def view_car_available():
-    car = open("cars_available.txt")
-    car_data = car.readlines()
-    for i in car_data:
-        print(i)
+def admin_menu():
+    print('''
+    \n-------What would you like to do?-------\n
+    [1]Add Cars to be rented out
+    [2]Modify Car details 
+    [3]Return a rented car\n
+
+    Display All records of:
+    [4]Cars rented out
+    [5]Cars available for rent
+    [6]Customer Bookings
+    [7]Customer Payment for a specific time duration\n
+
+    Search Specific record of:
+    [8]Customer Booking
+    [9]Customer Payment
+    [10]Exit\n
+    ''')
+    
+    #prompt user for input
+    option3 = input("Please Enter Your Option :")
+
+    if option3 == "1":
+        new_car()
+    elif option3 =="2":
+        modify_car_detail()
+    
+    elif option3 =="3":
+        return_rented_car()
+
+    elif option3 =="4":
+        all_rented_car()
+
+    elif option3 =="5":
+        view_car_available()
+
+    elif option3 =="6":
+        all_customer_booking()
+
+    elif option3 =="7":
+
+    elif option3 =="8":
+
+    elif option3 =="9":
+        
+    elif option3 =="10":
+        sys.exit()
+    
+    else:
+        admin_menu()
+
+#ii.	Add Cars to be rented out. (RJ)
+def new_car():
+    f = open("car.txt", "a+")
+    car_data = f.readlines()
+    #input
+    new_car_id = input("New Car ID(eg: car1):")
+    new_car_name = input("New Car's Name:")
+    is_car_available = "yes"
+    new_car_details = input("Car details(eg: color:red horsepower:130):")
+    #append to car_data list
+    car_data.append(new_car_id + ",")
+    car_data.append(new_car_name + ",")
+    car_data.append(is_car_available + ",")
+    car_data.append("none,none,none,")
+    car_data.append(new_car_details  + "\n")
+    f.writelines(car_data)
+    f.close()
+    print('''
+    Car to be rented is successfully added
+    >>>Returning to Admin Menu
+    ''')
+
+    admin_menu()
+
+
+#iii.	Modify Car Details done checked*
+#color: + horsepower: [6] and car id [0]
+def modify_car_detail():
+    id_input = input("To modify the car detail,\nPlease insert the car ID of the car:")
+    
+    for i in range(len(car_id)):
+        if id_input == car_id[i]:
+            print("This is the current car detail !\n")
+            print(car_id[i])
+            print(car_details[i].replace(" ","\n"))
+            new_detail = input("\nWhat is the new color and horsepower of the car? eg:(color:** horsepower:**)\n")
+            car_details[i] = new_detail
+            
+            cars_data = open("car.txt", "w")
+
+            for l in range(len(car_id)):
+                cars_data.write(car_id[l]+",")
+                cars_data.write(car_name[l]+",")
+                cars_data.write(car_available[l]+",")
+                cars_data.write(booking_customer[l]+",")
+                cars_data.write(booking_payment[l]+",")
+                cars_data.write(booking_duration[l]+",")
+                cars_data.write(car_details[l]+"\n")
+            cars_data.close()
+            print('''
+            Car Detail successfully modified . . .
+            >>>Returning to Admin Menu . . .
+            ''')
+            sleep(3)
+            admin_menu()
+    
+
+   
+    print('''
+    Car Detail failed to modify due to incorrect input . . .
+    >>>Returning to Admin Menu . . .
+    ''')
+    #adding sleep to make it looks more realistic, just like a loading page 
+    sleep(3)
+    admin_menu()
+
+
+#vi. Return a Rented Car.done checked*
+def return_rented_car():
+    id_input = input("Please Enter the Car ID of the rented car :")
+
+    
+    for i in range(len(car_id)):
+        if id_input == car_id[i]:
+            if car_available[i].replace(" ","") == "no":
+                print("\nPlease Check the details of the respective customer of the rented car\n")
+                #add on display of ex: "Customer name:"
+                print("Customer Name: ", booking_customer[i])
+                print("Booking duration (Nth days) : ", booking_duration[i])
+                print("Total Payment: ", booking_payment[i])
+
+                random_input = input("\n[1]Back to Admin Menu \nOr press anything to continue . . .")
+                if random_input == "1":
+                    admin_menu()
+
+
+
+                car_available[i] = "yes"
+                booking_customer[i] = "none"
+                booking_duration[i] = "none"
+                booking_payment[i] = "none"
+
+                cars_data = open("car.txt", "w")
+                for l in range(len(car_id)):
+                    cars_data.write(car_id[l]+",")
+                    cars_data.write(car_name[l]+",")
+                    cars_data.write(car_available[l]+",")
+                    cars_data.write(booking_customer[l]+",")
+                    cars_data.write(booking_payment[l]+",")
+                    cars_data.write(booking_duration[l]+",")
+                    cars_data.write(car_details[l]+"\n")
+
+                cars_data.close()
+                print('''
+                Car successfully returned . . .
+                >>>Returning to Admin Menu 
+                ''')
+                sleep(3)
+                admin_menu()
+            else:
+                print('''
+                The car is not rented !!!
+                >>>Returning back to Admin Menu
+                ''')
+                sleep(3)
+                admin_menu()
+    print('''
+    Incorrect Data entered . . .
+    >>> Returning back to Admin Menu . . .
+    ''')
+    sleep(3)
+    admin_menu()
+
+#display all records of a. Cars Rented Out done checked*(none value printed)
+def all_rented_car():
+    for i in range(len(car_id)):
+        if car_available[i].replace(" ","") == "no":
+            print("car id: " + car_id[i])
+            print("car name: " + car_name[i])
+            print("customer name: " + booking_customer[i])
+            print("Total payment: " + booking_payment[i])
+            print("Booking Duration (Nth day): " + booking_duration[i])
+            print("---Car details---\n" + car_details[i] + "\n")
+
+    x = input("\nPress Enter to return to admin menu . . .")
+    admin_menu()
+
+#Display all records of c. Customer Bookings done check
+def all_customer_booking():
+    for i in range(len(car_id)):
+        if car_available[i].replace(" ","") == "no":
+            print("customer name: " + booking_customer[i])
+            print("Total payment: " + booking_payment[i])
+            print("Booking Duration (Nth day): " + booking_duration[i])
+            print("car id of booked car: " + car_id[i] + "\n")
+
+    x = input("\nPress Enter to return to admin menu . . .")
+    admin_menu()
+            
+
+
+            
+            
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 main_menu()
