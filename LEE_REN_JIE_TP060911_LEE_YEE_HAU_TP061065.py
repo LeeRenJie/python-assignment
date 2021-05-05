@@ -39,7 +39,7 @@ import sys
 from time import sleep
 from datetime import date
 
-
+#Main menu, Ask identity of end user, either Customer or Admin
 def main_menu():
     print(date.today())
     print('''
@@ -152,11 +152,7 @@ def login_customer():
         if id_num2 == customer_id[i]:
             if password2 == customer_pass[i]:
                 registered_customer_menu()
-            else:
-                continue
-        else:
-            continue
-
+                
     print('''Error Id or Password detected
     >>> returning back to Customer Menu . . .''')
     customer_menu()
@@ -213,7 +209,8 @@ def registered_customer_menu():
     [6]Exit\n
     ''')
 
-
+#Functionality of Admin
+#i. Login to Access System.
 def login_admin():
     id_num1 = input("Please Enter Your ID :")
     password1 = input("Please Enter Your Password :")
@@ -272,11 +269,13 @@ def admin_menu():
     elif option3 == "7":
         payment_specific_time()
 
-    # elif option3 == "8":
+    elif option3 =="8":
+        specific_booking()
 
-    # elif option3 == "9":
-
-    elif option3 == "10":
+    elif option3 =="9":
+        specific_payment()
+        
+    elif option3 =="10":
         sys.exit()
 
     else:
@@ -433,8 +432,8 @@ def all_customer_booking():
 
     x = input("\nPress Enter to return to admin menu . . .")
     admin_menu()
-
-
+            
+#all records of d. Customer Payment for a specific time duration
 def payment_specific_time():
     specific_time = input(
         "\nPlease Enter a specific time to view all payments : ")
@@ -447,7 +446,8 @@ def payment_specific_time():
     x = input("\nPress Enter to return to admin menu . . .")
     admin_menu()
 
-
+#v. Search Specific record of
+#a. Customer Booking
 def specific_booking():
     print("---Please Enter the following specific criteria---")
     criteria_customer = input("customer name: ")
@@ -458,14 +458,33 @@ def specific_booking():
         if booking_customer[i].replace(" ", "") == criteria_customer:
             if car_id[i].replace(" ", "") == criteria_id:
                 print("Customer Name: " + booking_customer[i])
-                print("Total payment: " + booking_payment[i])
+                print("Booked Car: " + car_name[i])
+                print("Booked Car ID: " + car_id[i])
                 print("Booking Duration: " + booking_duration[i] + "\n")
 
-    x = input('''
-    Done !
+    x=input('''
+    Records of Specific Criteria are shown above !
     >>>Press Enter to return to Admin Menu
     ''')
 
+#v. Search Specific record of
+#b. Customer Payement
+def specific_payment():
+    print("---Please Enter the following specific criteria---")
+    criteria_customer = input("customer name: ")
+    criteria_id = input("Booked Car Id: ")
+
+    print("\n--Records of Customer Booking is shown below--")
+    for i in range(len(car_id)): #0 1 2 3
+        if booking_customer[i].replace(" ","") == criteria_customer:
+            if car_id[i].replace(" ","") == criteria_id:
+                print("Customer Name: " + booking_customer[i])
+                print("Total payment: " + booking_payment[i]+"\n")
+                
+    x=input('''
+    Records of Specific Criteria are shown above !
+    >>>Press Enter to return to Admin Menu
+    ''')
     admin_menu()
 
 
