@@ -267,7 +267,7 @@ def payment_specific_time():
     x = input("\nPress Enter to return to admin menu . . .")
     admin_menu()
 
-def specific_booking():
+def specific_booking():#rmb to add to main
     print("---Please Enter the following specific criteria---")
     criteria_customer = input("customer name: ")
     criteria_id = input("Booked Car Id: ")
@@ -277,7 +277,8 @@ def specific_booking():
         if booking_customer[i].replace(" ","") == criteria_customer:
             if car_id[i].replace(" ","") == criteria_id:
                 print("Customer Name: " + booking_customer[i])
-                print("Total payment: " + booking_payment[i])
+                print("Booked Car: " + car_name[i])
+                print("Booked Car ID: " + car_id[i])
                 print("Booking Duration: " + booking_duration[i] + "\n")
                 
             else:
@@ -286,10 +287,39 @@ def specific_booking():
                 print("Booking Duration: " + booking_duration[i] + "\n")#not in main
 
     print('''
-    Done !
+    Records of Specific Criteria are shown above !
     >>>Returning to Admin Menu
     ''')
     sleep(5)
     admin_menu()
 
-specific_booking()
+def specific_payment():
+    print("---Please Enter the following specific criteria---")
+    criteria_customer = input("customer name: ")
+    criteria_id = input("Booked Car Id: ")
+
+    print("\n--Records of Customer Booking is shown below--")
+    for i in range(len(car_id)): #0 1 2 3
+        if booking_customer[i].replace(" ","") == criteria_customer:
+            if car_id[i].replace(" ","") == criteria_id:
+                print("Customer Name: " + booking_customer[i])
+                print("Total payment: " + booking_payment[i]+"\n")
+                
+    x=input('''
+    Records of Specific Criteria are shown above !
+    >>>Press Enter to return to Admin Menu
+    ''')
+    admin_menu()
+
+def yes_no():
+    x = input("Yes or No?")
+    while True:
+        if x.lower() == "yes":
+            print("YES")
+            break
+        elif x.lower() == "no":
+            print("NO")
+            break
+        else:
+            x = input("YES or no??????")
+
