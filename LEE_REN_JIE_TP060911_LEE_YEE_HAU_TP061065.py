@@ -174,16 +174,24 @@ def new_customer():
     customer_data.append("none,none,none\n")
     f.writelines(customer_data)
     f.close()
+    x=input('''
+    Register is successful !
+    >>>Press Enter to Go to Customer Menu
+    ''')
     customer_menu()
 
 #i.	View all cars available for rent + Display all records of b. Cars available for Rent
 def view_car_available():
     for i in range(len(car_data)):
         if car_available[i] == "yes":
-            print(car_id[i])
-            print(car_name[i])
-            print(car_details[i])
-    
+            print("Car ID: " + car_id[i])
+            print("Car Name: " + car_name[i])
+            print("--Car Details--\n" +car_details[i]+"\n")
+    x=input('''
+    Records are shown above
+    >>>Press Enter to return to Main Menu
+    ''')
+    main_menu()
            
 #after login as a customer, menu
 def registered_customer_menu():
@@ -208,7 +216,7 @@ def login_admin():
                 admin_menu()
 
 
-    print('''
+    x=input('''
     Error ID or Password detected
     returning back to main menu . . .
     ''')
@@ -254,8 +262,10 @@ def admin_menu():
         all_customer_booking()
 
     elif option3 =="7":
+        payment_specific_time()
 
     elif option3 =="8":
+
 
     elif option3 =="9":
         
@@ -282,9 +292,10 @@ def new_car():
     car_data.append(new_car_details  + "\n")
     f.writelines(car_data)
     f.close()
-    print('''
-    Car to be rented is successfully added
-    >>>Returning to Admin Menu
+
+    x=input('''
+    Done !
+    >>>Press Enter to return to Admin Menu
     ''')
 
     admin_menu()
@@ -314,11 +325,10 @@ def modify_car_detail():
                 cars_data.write(booking_duration[l]+",")
                 cars_data.write(car_details[l]+"\n")
             cars_data.close()
-            print('''
-            Car Detail successfully modified . . .
-            >>>Returning to Admin Menu . . .
+            x=input('''
+            Done !
+            >>>Press Enter to return to Admin Menu
             ''')
-            sleep(3)
             admin_menu()
     
 
@@ -368,18 +378,16 @@ def return_rented_car():
                     cars_data.write(car_details[l]+"\n")
 
                 cars_data.close()
-                print('''
-                Car successfully returned . . .
-                >>>Returning to Admin Menu 
+                x=input('''
+                Done !
+                >>>Press Enter to return to Admin Menu
                 ''')
-                sleep(3)
                 admin_menu()
             else:
-                print('''
-                The car is not rented !!!
-                >>>Returning back to Admin Menu
+                x=input('''
+                Done !
+                >>>Press Enter to return to Admin Menu
                 ''')
-                sleep(3)
                 admin_menu()
     print('''
     Incorrect Data entered . . .
@@ -415,38 +423,37 @@ def all_customer_booking():
     admin_menu()
             
 
-
-            
-            
-
-
-
-
-
-
-
-
-
-
+def payment_specific_time():
+    specific_time = input("\nPlease Enter a specific time to view all payments : ")
+    for i in range(len(car_id)):
+        if booking_duration[i].replace(" ","") == specific_time:
+            print("All Payments in the " + specific_time + "th Day\n")
+            print("Customer Name: "+ booking_customer[i])
+            print("Total payment: " + booking_payment[i] +"\n")
     
+    x = input("\nPress Enter to return to admin menu . . .")
+    admin_menu()
+
+
+def specific_booking():
+    print("---Please Enter the following specific criteria---")
+    criteria_customer = input("customer name: ")
+    criteria_id = input("Booked Car Id: ")
+
+    print("\n--Records of Customer Booking is shown below--")
+    for i in range(len(car_id)): #0 1 2 3
+        if booking_customer[i].replace(" ","") == criteria_customer:
+            if car_id[i].replace(" ","") == criteria_id:
+                print("Customer Name: " + booking_customer[i])
+                print("Total payment: " + booking_payment[i])
+                print("Booking Duration: " + booking_duration[i] + "\n")
+
+    x=input('''
+    Done !
+    >>>Press Enter to return to Admin Menu
+    ''')
     
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    admin_menu()
 
 
 

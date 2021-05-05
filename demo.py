@@ -245,7 +245,7 @@ def all_rented_car():
     x = input("Press Anything to return to admin menu . . .")
     admin_menu()
 
-def all_customer_booking():
+def all_customer_booking(): #done
     for i in range(len(car_id)):
         if car_available[i].replace(" ","") == "no":
             print("customer name: " + booking_customer[i])
@@ -256,6 +256,40 @@ def all_customer_booking():
     x = input("\nPress Enter to return to admin menu . . .")
     admin_menu()
 
-all_customer_booking()
+def payment_specific_time():
+    specific_time = input("\nPlease Enter a specific time to view all payments : ")
+    for i in range(len(car_id)):
+        if booking_duration[i].replace(" ","") == specific_time:
+            print("All Payments in the " + specific_time + "th Day\n")
+            print("Customer Name: "+ booking_customer[i])
+            print("Total payment: " + booking_payment[i] +"\n")
+    
+    x = input("\nPress Enter to return to admin menu . . .")
+    admin_menu()
 
+def specific_booking():
+    print("---Please Enter the following specific criteria---")
+    criteria_customer = input("customer name: ")
+    criteria_id = input("Booked Car Id: ")
 
+    print("\n--Records of Customer Booking is shown below--")
+    for i in range(len(car_id)): #0 1 2 3
+        if booking_customer[i].replace(" ","") == criteria_customer:
+            if car_id[i].replace(" ","") == criteria_id:
+                print("Customer Name: " + booking_customer[i])
+                print("Total payment: " + booking_payment[i])
+                print("Booking Duration: " + booking_duration[i] + "\n")
+                
+            else:
+                print("Customer Name: " + booking_customer[i])#not in main
+                print("Total payment: " + booking_payment[i])#not in main
+                print("Booking Duration: " + booking_duration[i] + "\n")#not in main
+
+    print('''
+    Done !
+    >>>Returning to Admin Menu
+    ''')
+    sleep(5)
+    admin_menu()
+
+specific_booking()
