@@ -267,6 +267,7 @@ def payment_specific_time():
     x = input("\nPress Enter to return to admin menu . . .")
     admin_menu()
 
+payment_specific_time()
 def specific_booking():#rmb to add to main
     print("---Please Enter the following specific criteria---")
     criteria_customer = input("customer name: ")
@@ -322,4 +323,40 @@ def yes_no():
             break
         else:
             x = input("YES or no??????")
+
+def modify_car_detail():
+    id_input = input(
+        "To modify the car detail,\nPlease insert the car ID of the car:")
+
+    for i in range(len(car_id)):
+        if id_input == car_id[i]:
+            print("This is the current car detail !\n")
+            print(car_id[i])
+            print(car_details[i].replace(" ", "\n"))
+            new_detail = input(
+                "\nWhat is the new color and horsepower of the car? eg:(color:** horsepower:**)\n")
+            car_details[i] = new_detail
+
+            cars_data = open("car.txt", "w")
+
+            for l in range(len(car_id)):
+                cars_data.write(car_id[l]+",")
+                cars_data.write(car_name[l]+",")
+                cars_data.write(car_available[l]+",")
+                cars_data.write(booking_customer[l]+",")
+                cars_data.write(booking_payment[l]+",")
+                cars_data.write(booking_duration[l]+",")
+                cars_data.write(car_details[l]+"\n")
+            cars_data.close()
+            x = input('''
+            Done !
+            >>>Press Enter to return to Admin Menu
+            ''')
+            admin_menu()
+
+    x = input('''
+    Car Detail failed to modify due to incorrect input . . .
+    >>>Returning to Admin Menu . . .
+    ''')
+    admin_menu()
 
