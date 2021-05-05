@@ -1,4 +1,4 @@
-car1,ford ranger, yes, none, none, none,color:yellow horsepower:855
-car2,mercedes,yes,none,none,none, color:black horsepower:213
-car4,myvi, no , chiang juo han, 3000, 8   , color:black horsepower:213
-car5,toyota, no , lee ren jie   , 1000, 2   ,color:red horsepower:999
+car1,ford ranger,yes,none,none,none,color:yellow horsepower:855
+car2,mercedes,yes,none,none,none,color:black horsepower:213
+car4,myvi,no,chiang juo han,3000,8,color:black horsepower:213
+car5,toyota,no,lee ren jie, 1000,2,color:red horsepower:999
