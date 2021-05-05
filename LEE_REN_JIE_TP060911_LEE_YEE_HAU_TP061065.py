@@ -36,7 +36,6 @@ vii. Exit
 '''
 # python assignment demo
 import sys
-from time import sleep
 from datetime import date
 
 #Main menu, Ask identity of end user, either Customer or Admin
@@ -131,18 +130,20 @@ def customer_menu():
 
     option2 = input("Please Enter Your Option :")
 
-    if option2 == "1":
-        login_customer()
-    elif option2 == "2":
-        new_customer()
-    elif option2 == "3":
-        view_car_available()
-    else:
-        main_menu()
+    while True:
+        if option2 == "1":
+            login_customer()
+        elif option2 == "2":
+            new_customer()
+        elif option2 == "3":
+            view_car_available()
+        elif option2 =="4":
+            main_menu()
+        else:
+            option2 = input("Please Enter Your Option :")
 
-# i.	Login to Access System
 
-
+# i.	Login to Access System as a customer
 def login_customer():
 
     id_num2 = input("Please Enter Your ID :")
@@ -180,11 +181,11 @@ def new_customer():
     ''')
     customer_menu()
 
+
 # i.	View all cars available for rent + Display all records of b. Cars available for Rent
-
-
 def view_car_available():
-    for i in range(len(car_data)):
+    print("\n---All Records of Cars Available for Rent---")
+    for i in range(len(car_id)):
         if car_available[i] == "yes":
             print("Car ID: " + car_id[i])
             print("Car Name: " + car_name[i])
@@ -195,9 +196,8 @@ def view_car_available():
     ''')
     main_menu()
 
-# after login as a customer, menu
 
-
+# after the login as a customer, registered customer menu interface
 def registered_customer_menu():
     print('''
     [1]Modify Personal Details
@@ -209,11 +209,29 @@ def registered_customer_menu():
     [6]Exit\n
     ''')
 
+    option3 = input("Please Enter Your Option :")
+    #while True:
+        #if option3 == "1":
+        
+        #elif option3 == "2":
+
+        #elif option3 == "3":
+        
+        #elif option3 == "4":
+
+        #elif option3 == "5":
+            #main_menu()
+    
+        #elif option 3 == "6":
+            #sys.exit()
+        #else:
+            #option3 = input("Please Enter Your Option :")
+
 #Functionality of Admin
 #i. Login to Access System.
 def login_admin():
-    id_num1 = input("Please Enter Your ID :")
-    password1 = input("Please Enter Your Password :")
+    id_num1 = input("\nPlease Enter Your Admin ID :")
+    password1 = input("Please Enter Your Admin Password :")
 
     for i in range(len(admin_id)):
         if id_num1 == admin_id[i]:
@@ -226,64 +244,69 @@ def login_admin():
     ''')
     main_menu()
 
-
+# after the login as an admin, admin menu interface
 def admin_menu():
     print('''
     \n-------What would you like to do?-------\n
     [1]Add Cars to be rented out
     [2]Modify Car details
-    [3]Return a rented car\n
+    [3]Return a rented car
 
     Display All records of:
     [4]Cars rented out
     [5]Cars available for rent
     [6]Customer Bookings
-    [7]Customer Payment for a specific time duration\n
+    [7]Customer Payment for a specific Booking time duration\n
 
     Search Specific record of:
     [8]Customer Booking
     [9]Customer Payment
-    [10]Exit\n
+
+    [10]Back to Main Menu
+    [11]Exit\n
     ''')
 
     # prompt user for input
     option3 = input("Please Enter Your Option :")
+    while True:
+        if option3 == "1":
+            new_car()
 
-    if option3 == "1":
-        new_car()
-    elif option3 == "2":
-        modify_car_detail()
+        elif option3 == "2":
+            modify_car_detail()
 
-    elif option3 == "3":
-        return_rented_car()
+        elif option3 == "3":
+            return_rented_car()
 
-    elif option3 == "4":
-        all_rented_car()
+        elif option3 == "4":
+            all_rented_car()
 
-    elif option3 == "5":
-        view_car_available()
+        elif option3 == "5":
+            view_car_available()
 
-    elif option3 == "6":
-        all_customer_booking()
+        elif option3 == "6":
+            all_customer_booking()
 
-    elif option3 == "7":
-        payment_specific_time()
+        elif option3 == "7":
+            payment_specific_time()
 
-    elif option3 =="8":
-        specific_booking()
+        elif option3 =="8":
+            specific_booking()
 
-    elif option3 =="9":
-        specific_payment()
+        elif option3 =="9":
+            specific_payment()
         
-    elif option3 =="10":
-        sys.exit()
+        elif option3 =="10":
+            main_menu()
+        
+        elif option3 == "11":
+            sys.exit()
 
-    else:
-        admin_menu()
+        else:
+            option3 = input("Please Enter Your Option :")
+
 
 # ii.	Add Cars to be rented out. (RJ)
-
-
 def new_car():
     f = open("car.txt", "a+")
     car_data = f.readlines()
@@ -341,12 +364,10 @@ def modify_car_detail():
             ''')
             admin_menu()
 
-    print('''
+    x = input('''
     Car Detail failed to modify due to incorrect input . . .
     >>>Returning to Admin Menu . . .
     ''')
-    # adding sleep to make it looks more realistic, just like a loading page
-    sleep(3)
     admin_menu()
 
 
@@ -396,17 +417,16 @@ def return_rented_car():
                 >>>Press Enter to return to Admin Menu
                 ''')
                 admin_menu()
-    print('''
+    x = input('''
     Incorrect Data entered . . .
     >>> Returning back to Admin Menu . . .
     ''')
-    sleep(3)
     admin_menu()
 
+
 # display all records of a. Cars Rented Out done checked*(none value printed)
-
-
 def all_rented_car():
+    print("\n---All Records of Rented Cars---")
     for i in range(len(car_id)):
         if car_available[i].replace(" ", "") == "no":
             print("car id: " + car_id[i])
@@ -419,9 +439,8 @@ def all_rented_car():
     x = input("\nPress Enter to return to admin menu . . .")
     admin_menu()
 
+
 # Display all records of c. Customer Bookings done check
-
-
 def all_customer_booking():
     for i in range(len(car_id)):
         if car_available[i].replace(" ", "") == "no":
@@ -433,18 +452,20 @@ def all_customer_booking():
     x = input("\nPress Enter to return to admin menu . . .")
     admin_menu()
             
-#all records of d. Customer Payment for a specific time duration
+
+#all records of d. Customer Payment for a specific *booking* time duration
 def payment_specific_time():
     specific_time = input(
         "\nPlease Enter a specific time to view all payments : ")
     for i in range(len(car_id)):
         if booking_duration[i].replace(" ", "") == specific_time:
-            print("All Payments in the " + specific_time + "th Day\n")
+            print("All Payments on the " + specific_time + "th Day of booking\n")
             print("Customer Name: " + booking_customer[i])
             print("Total payment: " + booking_payment[i] + "\n")
 
     x = input("\nPress Enter to return to admin menu . . .")
     admin_menu()
+
 
 #v. Search Specific record of
 #a. Customer Booking
@@ -466,6 +487,7 @@ def specific_booking():
     Records of Specific Criteria are shown above !
     >>>Press Enter to return to Admin Menu
     ''')
+
 
 #v. Search Specific record of
 #b. Customer Payement
