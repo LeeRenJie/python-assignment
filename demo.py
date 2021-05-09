@@ -39,7 +39,9 @@ car_name = []
 car_available = []
 booking_customer = []
 booking_payment = []
-booking_duration = []
+booking_duration = [] 
+payment_month = []#new update
+payment_day = []
 car_details = []
 
 for car in lines:
@@ -50,7 +52,9 @@ for car in lines:
     booking_customer.append(car_list[3])
     booking_payment.append(car_list[4])
     booking_duration.append(car_list[5])
-    car_details.append(car_list[6].replace("\n", ""))
+    payment_month.append(car_list[6])
+    payment_day.append(car_list[7])
+    car_details.append(car_list[8].replace("\n", ""))
 
 # print(car_list)
 # print(car_id)
@@ -61,7 +65,7 @@ for car in lines:
 # print(booking_duration)
 # print(car_details[6].replace(" ","\n"))
 
-# Create data
+# Create data  #update later
 def new_car():
     f = open("car.txt", "a+")
     car_data = f.readlines()
@@ -74,7 +78,7 @@ def new_car():
     car_data.append(new_car_id + ",")
     car_data.append(new_car_name + ",")
     car_data.append(is_car_available + ",")
-    car_data.append("none,none,none,")
+    car_data.append("none,none,none,none,none")#add none if changed
     car_data.append(new_car_details  + "\n")
     f.writelines(car_data)
     f.close()
@@ -256,18 +260,6 @@ def all_customer_booking(): #done
     x = input("\nPress Enter to return to admin menu . . .")
     admin_menu()
 
-def payment_specific_time():
-    specific_time = input("\nPlease Enter a specific time to view all payments : ")
-    for i in range(len(car_id)):
-        if booking_duration[i].replace(" ","") == specific_time:
-            print("All Payments in the " + specific_time + "th Day\n")
-            print("Customer Name: "+ booking_customer[i])
-            print("Total payment: " + booking_payment[i] +"\n")
-    
-    x = input("\nPress Enter to return to admin menu . . .")
-    admin_menu()
-
-payment_specific_time()
 def specific_booking():#rmb to add to main
     print("---Please Enter the following specific criteria---")
     criteria_customer = input("customer name: ")
@@ -360,3 +352,71 @@ def modify_car_detail():
     ''')
     admin_menu()
 
+
+
+
+
+from datetime import date
+from datetime import datetime
+
+d1 = date(2011, 3, 28)
+d2 = date(2011, 3, 22)
+d3 = date(2011, 4, 3)
+print(d1)
+
+#none value is not allowed in txt file, only int allowed for date
+# "none" is not applicable for strptime
+#strft outputs string, cant compare value between strings
+
+#d8 = date(None)
+#print(d8)
+if d2 < d1 < d3:
+    print ('in between')
+else:
+    print ('No!')
+
+#1st solution
+d5 = datetime.strptime(input("enter start date in the format y/m/d "),"%Y/%m/%d")
+print(d5.strftime("%Y/%m/%d"))
+#print(type(d5))
+
+d4 = date(int(input("y")),int(input("m")),int(input("d")))
+print(d4)
+
+#if d5 > d4:
+    #print("d5 in advanced")
+#elif d4 > d5:
+    #print("d4 in advanced")
+#else:
+    #print("error")
+
+
+def payment_specific_time():
+    print("\nPlease Enter a specific time to view all specific payments in 2021: ")
+    start_month, start_day = int(input("Start Month:")),int(input("Start Day:"))
+    end_month, end_day = int(input("End month:")),int(input("End day:"))
+    for i in range(len(car_id)):
+        if payment_month[i] != "none":
+            check_month = int(payment_month[i])
+            check_day = int(payment_day[i])
+
+        #print("All Payments between "  + "th Day of booking\n")
+            if start_month < check_month < end_month:
+                print("\nCustomer Name: " + booking_customer[i])
+                print("Payment Date\nMonth:" + str(check_month) + "Day:" + str(check_day))
+                print("Total payment: " + booking_payment[i] + "\n")
+            elif start_month == check_month:
+                if start_day < check_day:
+                    print("\nCustomer Name: " + booking_customer[i])
+                    print("Payment Date\nMonth:" + str(check_month) + "Day:" + str(check_day))
+                    print("Total payment: " + booking_payment[i] + "\n") 
+            elif end_month == check_month:
+                if end_day > check_day:
+                    print("\nCustomer Name: " + booking_customer[i])
+                    print("Payment Date\nMonth:" + str(check_month) + "Day:" + str(check_day))
+                    print("Total payment: " + booking_payment[i] + "\n")
+    
+    x = input("\nPress Enter to return to admin menu . . .")
+    admin_menu()
+
+payment_specific_time()
