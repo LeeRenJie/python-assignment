@@ -40,8 +40,9 @@ car_available = []
 booking_customer = []
 booking_payment = []
 booking_duration = [] 
+payment_year = [] #new update
 payment_month = []#new update
-payment_day = []
+payment_day = []#new update
 car_details = []
 
 for car in lines:
@@ -52,9 +53,10 @@ for car in lines:
     booking_customer.append(car_list[3])
     booking_payment.append(car_list[4])
     booking_duration.append(car_list[5])
-    payment_month.append(car_list[6])
-    payment_day.append(car_list[7])
-    car_details.append(car_list[8].replace("\n", ""))
+    payment_year.append(car_list[6])
+    payment_month.append(car_list[7])
+    payment_day.append(car_list[8])
+    car_details.append(car_list[9].replace("\n", ""))
 
 # print(car_list)
 # print(car_id)
@@ -354,16 +356,14 @@ def modify_car_detail():
 
 
 
-
-
 from datetime import date
 from datetime import datetime
 
-d1 = date(2011, 3, 28)
+d1 = date(2011, 3, 28)#int
 d2 = date(2011, 3, 22)
 d3 = date(2011, 4, 3)
 print(d1)
-
+print("date: " + str(date(2011,3,28)))
 #none value is not allowed in txt file, only int allowed for date
 # "none" is not applicable for strptime
 #strft outputs string, cant compare value between strings
@@ -376,47 +376,65 @@ else:
     print ('No!')
 
 #1st solution
-d5 = datetime.strptime(input("enter start date in the format y/m/d "),"%Y/%m/%d")
-print(d5.strftime("%Y/%m/%d"))
+#d5 = datetime.strptime(input("enter start date in the format y/m/d "),"%Y/%m/%d")
+#print(d5.strftime("%Y-%m-%d"))
 #print(type(d5))
 
-d4 = date(int(input("y")),int(input("m")),int(input("d")))
-print(d4)
+#d4 = datetime.strptime(input("enter start date in the format y/m/d "),"%Y/%m/%d")
+#print(d5.strftime("%Y-%m-%d"))
+#print(type(d5))
 
-#if d5 > d4:
+#d6 = datetime.strptime(input("enter start date in the format y/m/d "),"%Y/%m/%d")
+#print(d5.strftime("%Y-%m-%d"))
+#print(type(d5))
+
+
+#if d5 > d4 > d6:
     #print("d5 in advanced")
-#elif d4 > d5:
-    #print("d4 in advanced")
 #else:
     #print("error")
 
 
 def payment_specific_time():
     print("\nPlease Enter a specific time to view all specific payments in 2021: ")
-    start_month, start_day = int(input("Start Month:")),int(input("Start Day:"))
-    end_month, end_day = int(input("End month:")),int(input("End day:"))
+    start_year,start_month, start_day = int(input("Start Year:")), int(input("Start Month:")), int(input("Start Day:"))
+    end_year,end_month, end_day = int(input("End Year:")), int(input("End month:")), int(input("End day:"))
+
+    #print("All Payments between "  + "th Day of booking\n")
     for i in range(len(car_id)):
         if payment_month[i] != "none":
+            check_year = int(payment_year[i])
             check_month = int(payment_month[i])
             check_day = int(payment_day[i])
 
-        #print("All Payments between "  + "th Day of booking\n")
-            if start_month < check_month < end_month:
+        
+            if start_year < check_year < end_year:
                 print("\nCustomer Name: " + booking_customer[i])
-                print("Payment Date\nMonth:" + str(check_month) + "Day:" + str(check_day))
-                print("Total payment: " + booking_payment[i] + "\n")
-            elif start_month == check_month:
-                if start_day < check_day:
+                print("Payment Date\nMonth:" + str(date(check_year,check_month,check_day)))
+            elif start_year == check_year:
+                if start_month < check_month:
                     print("\nCustomer Name: " + booking_customer[i])
-                    print("Payment Date\nMonth:" + str(check_month) + "Day:" + str(check_day))
+                    print("Payment Date\nMonth:" + str(date(check_year,check_month,check_day)))
                     print("Total payment: " + booking_payment[i] + "\n") 
-            elif end_month == check_month:
-                if end_day > check_day:
+                elif start_month == check_month:
+                    if start_day < check_day:
+                        print("\nCustomer Name: " + booking_customer[i])
+                        print("Payment Date\nMonth:" + str(date(check_year,check_month,check_day)))
+                        print("Total payment: " + booking_payment[i] + "\n") 
+            elif end_year == check_year:
+                if end_month > check_month:
                     print("\nCustomer Name: " + booking_customer[i])
-                    print("Payment Date\nMonth:" + str(check_month) + "Day:" + str(check_day))
+                    print("Payment Date\nMonth:" + str(date(check_year,check_month,check_day)))
                     print("Total payment: " + booking_payment[i] + "\n")
+                elif end_month == check_month:
+                    if end_day > check_day:
+                        print("\nCustomer Name: " + booking_customer[i])
+                        print("Payment Date\nMonth:" + str(date(check_year,check_month,check_day)))
+                        print("Total payment: " + booking_payment[i] + "\n") 
     
     x = input("\nPress Enter to return to admin menu . . .")
     admin_menu()
+
+
 
 payment_specific_time()
