@@ -1,6 +1,6 @@
-car1,ford ranger,yes,none,none,none,none,none,color:yellow horsepower:855
-car2,mercedes,yes,none,none,none,none,none,color:rainbow horsepower:332
-car4,myvi,no,chiang juo han,3000,8,5,2,color:black horsepower:213
-car5,kancil,no,lee ren jie, 1000,2,9,3,color:red horsepower:999
-car6,ferrari,yes,none,none,none,none,none,color:green horsepower:666
-car7,toyota,yes,none,none,none,none,none,color:blue horsepower:899
+car1,ford ranger,yes,none,none,none,none,none,none,color:yellow horsepower:855
+car2,mercedes,yes,none,none,none,none,none,none,color:rainbow horsepower:332
+car4,myvi,no,chiang juo han,3000,8,2002,5,2,color:black horsepower:213
+car5,kancil,no,lee ren jie, 1000,2,2005,9,3,color:red horsepower:999
+car6,ferrari,yes,none,none,none,none,none,none,color:green horsepower:666
+car7,toyota,yes,none,none,none,none,none,none,color:blue horsepower:899
