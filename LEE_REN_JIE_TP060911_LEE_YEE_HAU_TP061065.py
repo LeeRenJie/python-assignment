@@ -357,11 +357,13 @@ def book_car():
                 else:
                     booking_option= input("Please Enter Your Option: ")
 
+
 # vi. Do payment to confirm Booking.
 def booking_payment():
     card = input("Please insert your card details: ")
 
 
+#-----------------------------------------Admin Functions---------------------------------------
 #Functionality of Admin
 #i. Login to Access System.
 def login_admin():
