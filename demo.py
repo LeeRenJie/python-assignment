@@ -356,7 +356,7 @@ def modify_car_detail():
 
 
 
-from datetime import date
+from datetime import date, timedelta
 from datetime import datetime
 
 d1 = date(2011, 3, 28)#int
@@ -368,12 +368,16 @@ print("date: " + str(date(2011,3,28)))
 # "none" is not applicable for strptime
 #strft outputs string, cant compare value between strings
 
+
 #d8 = date(None)
 #print(d8)
 if d2 < d1 < d3:
     print ('in between')
 else:
     print ('No!')
+
+
+
 
 #1st solution
 #d5 = datetime.strptime(input("enter start date in the format y/m/d "),"%Y/%m/%d")
@@ -400,7 +404,7 @@ def payment_specific_time():
     start_year,start_month, start_day = int(input("Start Year:")), int(input("Start Month:")), int(input("Start Day:"))
     end_year,end_month, end_day = int(input("End Year:")), int(input("End month:")), int(input("End day:"))
 
-    #print("All Payments between "  + "th Day of booking\n")
+    print("\n---All Payments between "  + str(date(start_year,start_month,start_day)) + " and " + str(date(end_year,end_month,end_day)) + "---")
     for i in range(len(car_id)):
         if payment_month[i] != "none":
             check_year = int(payment_year[i])
@@ -437,4 +441,3 @@ def payment_specific_time():
 
 
 
-payment_specific_time()

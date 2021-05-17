@@ -377,7 +377,7 @@ def modify_car_detail():
     admin_menu()
 
 
-# vi. Return a Rented Car.done checked*
+# vi. Return a Rented Car.done checked* 
 def return_rented_car():
     id_input = input("Please Enter the Car ID of the rented car :")
 
@@ -430,7 +430,7 @@ def return_rented_car():
     admin_menu()
 
 
-# display all records of a. Cars Rented Out done checked*(none value printed)
+# display all records of a. Cars Rented Out done checked*(none value printed) #add date to return car (timedelta import it)
 def all_rented_car():
     print("\n---All Records of Rented Cars---")
     for i in range(len(car_id)):
@@ -446,7 +446,7 @@ def all_rented_car():
     admin_menu()
 
 
-# Display all records of c. Customer Bookings done check
+# Display all records of c. Customer Bookings done check #add date to return car (timedelta import it)
 def all_customer_booking():
     for i in range(len(car_id)):
         if car_available[i].replace(" ", "") == "no":
@@ -465,7 +465,7 @@ def payment_specific_time():
     start_year,start_month, start_day = int(input("Start Year:")), int(input("Start Month:")), int(input("Start Day:"))
     end_year,end_month, end_day = int(input("End Year:")), int(input("End month:")), int(input("End day:"))
 
-    #print("All Payments between "  + "th Day of booking\n")
+    print("\n---All Payments between "  + str(date(start_year,start_month,start_day)) + " and " + str(date(end_year,end_month,end_day)) + "---")
     for i in range(len(car_id)):
         if payment_month[i] != "none":
             check_year = int(payment_year[i])
@@ -502,7 +502,7 @@ def payment_specific_time():
 
 
 #v. Search Specific record of
-#a. Customer Booking
+#a. Customer Booking #add date to return car (timedelta import it)
 def specific_booking():
     print("---Please Enter the following specific criteria---")
     criteria_customer = input("customer name: ")
