@@ -39,7 +39,7 @@ car_name = []
 car_available = []
 booking_customer = []
 booking_payment = []
-booking_duration = [] 
+booking_duration = []
 payment_year = [] #new update
 payment_month = []#new update
 payment_day = []#new update
@@ -135,7 +135,7 @@ def new_customer():#
 def login_admin():
     id_num1 = input("Please Enter Your ID :")
     password1 = input("Please Enter Your Password :")
-    
+
     for i in range(len(admin_id)):
         if id_num1 == admin_id[i]:
             if password1 == admin_pass[i]:
@@ -152,7 +152,7 @@ def admin_menu():
     print('''
     \n-------What would you like to do?-------\n
     [1]Add Cars to be rented out
-    [2]Modify Car details 
+    [2]Modify Car details
     [3]Return a rented car\n
 
     Display All records of:
@@ -166,7 +166,7 @@ def admin_menu():
     [9]Customer Payment
     [10]Exit\n
     ''')
-    
+
     #prompt user for input
     option3 = input("Please Enter Your Option :")
 
@@ -174,7 +174,7 @@ def admin_menu():
         new_car()
     elif option3 =="2":
         modify_car_detail()
-    
+
     elif option3 =="3":
         return_rented_car()
 
@@ -195,10 +195,10 @@ def admin_menu():
 
     elif option3 =="9":
         pass
-        
+
     elif option3 =="10":
-        sys.exit()
-    
+        quit()
+
     else:
         admin_menu()
 
@@ -275,7 +275,7 @@ def specific_booking():#rmb to add to main
                 print("Booked Car: " + car_name[i])
                 print("Booked Car ID: " + car_id[i])
                 print("Booking Duration: " + booking_duration[i] + "\n")
-                
+
             else:
                 print("Customer Name: " + booking_customer[i])#not in main
                 print("Total payment: " + booking_payment[i])#not in main
@@ -299,7 +299,7 @@ def specific_payment():
             if car_id[i].replace(" ","") == criteria_id:
                 print("Customer Name: " + booking_customer[i])
                 print("Total payment: " + booking_payment[i]+"\n")
-                
+
     x=input('''
     Records of Specific Criteria are shown above !
     >>>Press Enter to return to Admin Menu
@@ -407,7 +407,7 @@ def payment_specific_time():
             check_month = int(payment_month[i])
             check_day = int(payment_day[i])
 
-        
+
             if start_year < check_year < end_year:
                 print("\nCustomer Name: " + booking_customer[i])
                 print("Payment Date\nMonth:" + str(date(check_year,check_month,check_day)))
@@ -415,12 +415,12 @@ def payment_specific_time():
                 if start_month < check_month:
                     print("\nCustomer Name: " + booking_customer[i])
                     print("Payment Date\nMonth:" + str(date(check_year,check_month,check_day)))
-                    print("Total payment: " + booking_payment[i] + "\n") 
+                    print("Total payment: " + booking_payment[i] + "\n")
                 elif start_month == check_month:
                     if start_day < check_day:
                         print("\nCustomer Name: " + booking_customer[i])
                         print("Payment Date\nMonth:" + str(date(check_year,check_month,check_day)))
-                        print("Total payment: " + booking_payment[i] + "\n") 
+                        print("Total payment: " + booking_payment[i] + "\n")
             elif end_year == check_year:
                 if end_month > check_month:
                     print("\nCustomer Name: " + booking_customer[i])
@@ -430,8 +430,8 @@ def payment_specific_time():
                     if end_day > check_day:
                         print("\nCustomer Name: " + booking_customer[i])
                         print("Payment Date\nMonth:" + str(date(check_year,check_month,check_day)))
-                        print("Total payment: " + booking_payment[i] + "\n") 
-    
+                        print("Total payment: " + booking_payment[i] + "\n")
+
     x = input("\nPress Enter to return to admin menu . . .")
     admin_menu()
 

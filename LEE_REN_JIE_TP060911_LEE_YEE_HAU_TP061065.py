@@ -35,7 +35,6 @@ vi. Do payment to confirm Booking.
 vii. Exit
 '''
 # python assignment demo
-import sys
 from datetime import date
 
 #Main menu, Ask identity of end user, either Customer or Admin
@@ -58,7 +57,7 @@ def main_menu():
             login_admin()
             break
         elif option == "3":
-            sys.exit()
+            quit()
 
         else:
             option = input("Please Enter Your Option :")
@@ -86,6 +85,7 @@ customer_name = []
 car_name = []
 customer_payment = []
 customer_duration = []
+customer_card = []
 
 for customer in lines:
     customer_list = customer.split(",")
@@ -94,7 +94,8 @@ for customer in lines:
     customer_name.append(customer_list[2])
     car_name.append(customer_list[3])
     customer_payment.append(customer_list[4])
-    customer_duration.append(customer_list[5].replace("\n", ""))
+    customer_duration.append(customer_list[5])
+    customer_card.append(customer_list[6].replace("\n", ""))
 
 # ----------------------------------CAR DATA OPERATIONS-------------------------------------------------------
 # Read data
@@ -104,12 +105,13 @@ car_id = []
 car_name = []
 car_price = []#new
 car_available = []
+ctm_key = []#new
 booking_customer = []
 booking_payment = []
 booking_duration = []
-payment_year = [] #new update
-payment_month = []#new update
-payment_day = []#new update
+payment_year = []
+payment_month = []
+payment_day = []
 car_details = []
 
 for car in lines:
@@ -118,13 +120,14 @@ for car in lines:
     car_name.append(car_list[1])
     car_price.append(car_list[2])
     car_available.append(car_list[3])
-    booking_customer.append(car_list[4])
-    booking_payment.append(car_list[5])
-    booking_duration.append(car_list[6])
-    payment_year.append(car_list[7])
-    payment_month.append(car_list[8])
-    payment_day.append(car_list[9])
-    car_details.append(car_list[10].replace("\n", ""))
+    ctm_key.append(car_list[4])
+    booking_customer.append(car_list[5])
+    booking_payment.append(car_list[6])
+    booking_duration.append(car_list[7])
+    payment_year.append(car_list[8])
+    payment_month.append(car_list[9])
+    payment_day.append(car_list[10])
+    car_details.append(car_list[11].replace("\n", ""))
 
 #-----------------------------------CUSTOMER FUNCTIONS-------------------------------------
 def customer_menu():
@@ -172,14 +175,16 @@ def new_customer():
     customer_data = f.readlines()
     # input
     # need add auto id
-    new_ctm_id = input("New Customer ID(eg: ctm1):")
-    new_ctm_pass = input("Your Password:")
-    new_ctm_name = input("Your Name:")
+    new_ctm_id = input("New Customer ID(eg: ctm1): ")
+    new_ctm_pass = input("Your Password: ")
+    new_ctm_name = input("Your Name: ")
+    new_ctm_card = input("Your Card Number (16 Numbers): ")
     # append to car_data list
     customer_data.append(new_ctm_id + ",")
     customer_data.append(new_ctm_pass + ",")
     customer_data.append(new_ctm_name + ",")
-    customer_data.append("none,none,none\n")
+    customer_data.append("none,none,none,")
+    customer_data.append(new_ctm_card + "\n")
     f.writelines(customer_data)
     f.close()
     x = input('''
@@ -198,7 +203,7 @@ def login_customer():
     for i in range(len(customer_id)):
         if ctm_id_input == customer_id[i]:
             if ctm_password_input == customer_pass[i]:
-                registered_customer_menu()
+                registered_customer_menu(ctm_id_input)
 
     print('''\nError Id or Password detected
     >>> returning back to Customer Menu . . .''')
@@ -206,7 +211,7 @@ def login_customer():
 
 
 # After the login as a customer, registered customer menu interface
-def registered_customer_menu():
+def registered_customer_menu(ctm_id):
     print('''
     What would you like to do?
     [1]Modify Personal Details
@@ -219,28 +224,27 @@ def registered_customer_menu():
     option3 = input("Please Enter Your Option: ")
     while True:
         if option3 == "1":
-            modify_customer_detail()
+            modify_customer_detail(ctm_id)
 
         elif option3 == "2":
-            view_car_details()
+            view_car_details(ctm_id)
 
         elif option3 == "3":
-            rental_history()
+            rental_history(ctm_id)
 
         elif option3 == "4":
             main_menu()
 
         elif option3 == "5":
-            sys.exit()
+            quit()
 
         else:
             option3 = input("Please Enter Your Option: ")
 
 
 # ii. Modify Personal Details.
-def modify_customer_detail():
-    ctm_pass_input = input(
-        "\nTo modify your detail,\nPlease insert your password again:")
+def modify_customer_detail(ctm_id):
+    ctm_pass_input = input("\nTo modify your detail,\nPlease insert your password again:")
 
     for i in range(len(customer_pass)):
         if ctm_pass_input == customer_pass[i]:
@@ -248,13 +252,15 @@ def modify_customer_detail():
             print("ID: ", customer_id[i])
             print("Name: ", customer_name[i].title())
             print("Password: ", customer_pass[i])
+            print("Card Number: ", customer_card[i])
             print('''
             What would you like to modify?
             [1]Name
             [2]Password
+            [3]Card Number
 
             Or,
-            [3]Back To Menu
+            [4]Back To Menu
             ''')
 
             modify_option = input("Please Enter Your Option: ")
@@ -270,13 +276,14 @@ def modify_customer_detail():
                         customer_data.write(customer_name[index]+ ",")
                         customer_data.write(car_name[index]+",")
                         customer_data.write(customer_payment[index]+",")
-                        customer_data.write(customer_duration[index]+"\n")
+                        customer_data.write(customer_duration[index]+",")
+                        customer_data.write(customer_card[index]+"\n")
                     customer_data.close()
                     x = input('''
                     Done !
                     >>>Press Enter to return to Customer Menu
                     ''')
-                    registered_customer_menu()
+                    registered_customer_menu(ctm_id)
 
                 elif modify_option == "2":
                     new_password = input("\nWhat is your new password:")
@@ -288,27 +295,54 @@ def modify_customer_detail():
                         customer_data.write(customer_name[index]+ ",")
                         customer_data.write(car_name[index]+",")
                         customer_data.write(customer_payment[index]+",")
-                        customer_data.write(customer_duration[index]+"\n")
+                        customer_data.write(customer_duration[index]+",")
+                        customer_data.write(customer_card[index]+"\n")
                     customer_data.close()
                     x = input('''
                     Done !
                     >>>Press Enter to return to Customer Menu
                     ''')
-                    registered_customer_menu()
+                    registered_customer_menu(ctm_id)
 
                 elif modify_option == "3":
-                    registered_customer_menu()
+                    new_card = input("\nWhat is your new card number(16 numbers):")
+                    customer_card[i] = new_card
+                    customer_data = open("customer.txt", "w")
+                    for index in range(len(customer_id)):
+                        customer_data.write(customer_id[index]+",")
+                        customer_data.write(customer_pass[index]+",")
+                        customer_data.write(customer_name[index]+ ",")
+                        customer_data.write(car_name[index]+",")
+                        customer_data.write(customer_payment[index]+",")
+                        customer_data.write(customer_duration[index]+",")
+                        customer_data.write(customer_card[index]+"\n")
+                    customer_data.close()
+                    x = input('''
+                    Done !
+                    >>>Press Enter to return to Customer Menu
+                    ''')
+                    registered_customer_menu(ctm_id)
+
+                elif modify_option == "4":
+                    registered_customer_menu(ctm_id)
 
                 else:
                     modify_option = input("Please Enter Your Option :")
 
 
 # iii. View Personal Rental History.
-def rental_history():
-    print("rental history")
+def rental_history(ctm_id):
+    get_ctm_pass = input("Please enter your password: ")
+    for i in range(len(customer_pass)):
+        if get_ctm_pass == customer_pass[i]:
+            for key in range(len(ctm_key)):
+                if key == customer_id[i]:
+                    print("Your ID: ", customer_id[i])
+                    print("Your Name: ", customer_name[i])
+
 
 # iv. View Detail of Cars to be Rented Out.
-def view_car_details():
+def view_car_details(ctm_id):
     print("\n---All Records of Cars Available for Rent---")
     for i in range(len(car_id)):
         if car_available[i] == "yes":
@@ -323,17 +357,17 @@ def view_car_details():
     ctm_option= input("Please Enter Your Option: ")
     while True:
         if ctm_option == "1":
-            book_car()
+            book_car(ctm_id)
 
         elif ctm_option == "2":
-            registered_customer_menu()
+            registered_customer_menu(ctm_id)
 
         else:
             ctm_option= input("Please Enter Your Option: ")
 
 
 # v. Select and Book a car for a specific duration.
-def book_car():
+def book_car(ctm_id):
     book_car_input = input(
         "\nTo book a car,\nPlease insert the Car ID or Name:")
     for i in range(len(car_id)):
@@ -343,24 +377,59 @@ def book_car():
             print('''
             What would you like to do?
             [1]Proceed To Payment
-            [2]Choose Another Car
+            [2]Choose Another Car to Rent
+            [3]View Details of Cars Available
             '''
             )
             booking_option= input("Please Enter Your Option: ")
             while True:
                 if booking_option == "1":
-                    booking_payment()
+                    booking_payment(book_car_input,ctm_id)
 
                 elif booking_option == "2":
-                    view_car_details()
+                    book_car(ctm_id)
+
+                elif booking_option == "3":
+                    view_car_details(ctm_id)
 
                 else:
                     booking_option= input("Please Enter Your Option: ")
 
 
 # vi. Do payment to confirm Booking.
-def booking_payment():
-    card = input("Please insert your card details: ")
+def booking_payment(book_car_input,ctm_id):
+    ctm_booking_duration = input("How many days would you like to rent the car?: ")
+    for i in range(len(customer_id)):
+        if ctm_id == customer_id[i]:
+            for index in range(len(car_id)):
+                if (book_car_input == car_id[index]) or (book_car_input == car_name[index]):
+                    print("\nYour card number is: ", customer_card[i])
+                    total = (int(ctm_booking_duration) * int(car_price[index]))
+                    print(f"Car Name: {car_name[index].title()}")
+                    print(f"Number of Days: {ctm_booking_duration}")
+                    print(f"Total Payment: RM {total}")
+                    print('''
+                    Confirm Payment?
+                    [1]Yes
+                    [2]Change Number of Days to Rent
+                    [3]View Details of Cars Available for Rent
+                    '''
+                    )
+                    payment_option= input("Please Enter Your Option: ")
+                    while True:
+                        if payment_option == "1":
+                            print("Payment Completed")
+                            registered_customer_menu(ctm_id)
+
+                        elif payment_option == "2":
+                            booking_payment(book_car_input,ctm_id)
+
+                        elif payment_option == "3":
+                            view_car_details(ctm_id)
+
+                        else:
+                            payment_option= input("Please Enter Your Option: ")
+
 
 
 #-----------------------------------------Admin Functions---------------------------------------
@@ -438,7 +507,7 @@ def admin_menu():
             main_menu()
 
         elif option3 == "11":
-            sys.exit()
+            quit()
 
         else:
             option3 = input("Please Enter Your Option :")
