@@ -1,6 +1,6 @@
-car1,ford ranger,yes,none,none,none,none,none,none,color:yellow horsepower:855
-car2,mercedes,yes,none,none,none,none,none,none,color:rainbow horsepower:332
-car4,myvi,no,chiang juo han,3000,8,2002,5,2,color:black horsepower:213
-car5,kancil,no,lee ren jie, 1000,2,2005,9,3,color:red horsepower:999
-car6,ferrari,yes,none,none,none,none,none,none,color:green horsepower:666
-car7,toyota,yes,none,none,none,none,none,none,color:blue horsepower:899
+car1,ford ranger,400,no,ctm1,lee yee hau,2000,5,2021,5,6,color:yellow horsepower:855 price:400
+car2,kancil,200,yes,none,none,none,none,none,none,none,color:rainbow horsepower:332 price:200
+car3,mercedes,500,no,ctm2,chiang juo han,4000,8,2021,3,2,color:black horsepower:213 price:500
+car4,myvi,300,no,ctm3,lee ren jie,600,2,2021,2,1,color:red horsepower:999 price:300
+car5,ferrari,1000,yes,none,none,none,none,none,none,none,color:green horsepower:666 price:1000
+car6,toyota,400,yes,none,none,none,none,none,none,none,color:blue horsepower:899 price:400
