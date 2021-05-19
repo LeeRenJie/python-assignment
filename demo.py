@@ -543,15 +543,17 @@ def new_car():
     f = open("car.txt", "a+")
     car_data = f.readlines()
     # input
-    new_car_id = input("New Car ID(eg: car1):")
-    new_car_name = input("New Car's Name:")
+    new_car_id = input("New Car ID(eg: car1): ")
+    new_car_name = input("New Car's Name: ")
+    new_car_price = input("New Car's Price: ")
     is_car_available = "yes"
-    new_car_details = input("Car details(eg: color:red horsepower:130):")
+    new_car_details = input("Car details(eg: color:red horsepower:130 price:200):")
     # append to car_data list
     car_data.append(new_car_id + ",")
     car_data.append(new_car_name + ",")
+    car_data.append(new_car_price + ",")
     car_data.append(is_car_available + ",")
-    car_data.append("none,none,none,")
+    car_data.append("none,none,none,none,none,none,none,")
     car_data.append(new_car_details + "\n")
     f.writelines(car_data)
     f.close()
@@ -580,17 +582,22 @@ def modify_car_detail():
                 "\nWhat is the new color and horsepower of the car? eg:(color:** horsepower:**)\n")
             car_details[i] = new_detail
 
-            car_data = open("car.txt", "w")
+            cars_data = open("car.txt", "w")
 
             for l in range(len(car_id)):
-                car_data.write(car_id[l]+",")
-                car_data.write(car_name[l]+",")
-                car_data.write(car_available[l]+",")
-                car_data.write(booking_customer[l]+",")
-                car_data.write(booking_payment[l]+",")
-                car_data.write(booking_duration[l]+",")
-                car_data.write(car_details[l]+"\n")
-            car_data.close()
+                cars_data.write(car_id[l]+",")
+                cars_data.write(car_name[l]+",")
+                cars_data.write(car_price[l]+",")
+                cars_data.write(car_available[l]+",")
+                cars_data.write(ctm_key[l]+",")
+                cars_data.write(booking_customer[l]+",")
+                cars_data.write(booking_payment[l]+",")
+                cars_data.write(booking_duration[l]+",")
+                cars_data.write(payment_year[l]+",")
+                cars_data.write(payment_month[l]+",")
+                cars_data.write(payment_day[l]+",")
+                cars_data.write(car_details[l]+"\n")
+            cars_data.close()
             x = input('''
             Done !
             >>>Press Enter to return to Admin Menu
@@ -625,18 +632,27 @@ def return_rented_car():
                     admin_menu()
 
                 car_available[i] = "yes"
+                ctm_key[i] = "none"
                 booking_customer[i] = "none"
                 booking_duration[i] = "none"
                 booking_payment[i] = "none"
+                payment_year[i] = "none"
+                payment_month[i] = "none"
+                payment_day[i] = "none"
 
                 cars_data = open("car.txt", "w")
                 for l in range(len(car_id)):
                     cars_data.write(car_id[l]+",")
                     cars_data.write(car_name[l]+",")
+                    cars_data.write(car_price[l]+",")
                     cars_data.write(car_available[l]+",")
+                    cars_data.write(ctm_key[l]+ ",")
                     cars_data.write(booking_customer[l]+",")
                     cars_data.write(booking_payment[l]+",")
                     cars_data.write(booking_duration[l]+",")
+                    cars_data.write(payment_year[l]+",")
+                    cars_data.write(payment_month[l]+",")
+                    cars_data.write(payment_day[l]+",")
                     cars_data.write(car_details[l]+"\n")
 
                 cars_data.close()
@@ -683,7 +699,17 @@ def all_customer_booking():
             print("customer name: " + booking_customer[i])
             print("Total payment: " + booking_payment[i])
             print("Booking Duration (Nth day): " + booking_duration[i])
-            print("car id of booked car: " + car_id[i] + "\n")
+            print("Booked car's ID: " + car_id[i] + "\n")
+            #Take booking duration data from txt file and insert into variable as Integer
+            add_num = int(booking_duration[i])
+            add_num_new = timedelta(add_num)
+
+            #Take payment date data from txt file and insert into variable as Integer
+            check_year = int(payment_year[i])
+            check_month = int(payment_month[i])
+            check_day = int(payment_day[i])
+            return_date = date(check_year,check_month,check_day) + add_num_new
+            print("The date to return the car: " + str(return_date))
 
     x = input("\nPress Enter to return to admin menu . . .")
     admin_menu()
@@ -747,10 +773,21 @@ def specific_booking():
                 print("Customer Name: " + booking_customer[i])
                 print("Booked Car: " + car_name[i])
                 print("Booked Car ID: " + car_id[i])
-                print("Booking Duration: " + booking_duration[i] + "\n")
+                print("Booking Duration: " + booking_duration[i] + "days\n")
+
+                #Take booking duration data from txt file and insert into variable as Integer
+                add_num = int(booking_duration[i])
+                add_num_new = timedelta(add_num)
+
+                #Take payment date data from txt file and insert into variable as Integer
+                check_year = int(payment_year[i])
+                check_month = int(payment_month[i])
+                check_day = int(payment_day[i])
+                return_date = date(check_year,check_month,check_day) + add_num_new
+                print("The date to return the car: " + str(return_date))
 
     x=input('''
-    Records of Specific Criteria are shown above !
+    Records of Matched Criteria are shown above !
     >>>Press Enter to return to Admin Menu
     ''')
 
@@ -771,7 +808,7 @@ def specific_payment():
                 print("Total payment: " + booking_payment[i]+"\n")
 
     x=input('''
-    Records of Specific Criteria are shown above !
+    Records of Matched Criteria are shown above !
     >>>Press Enter to return to Admin Menu
     ''')
     admin_menu()
