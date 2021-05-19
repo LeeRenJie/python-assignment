@@ -132,7 +132,7 @@ for car in lines:
 #-----------------------------------CUSTOMER FUNCTIONS-------------------------------------
 def customer_menu():
     print('''
-    -------Welcome!-------\n
+    -------Welcome To The Customer Menu-------\n
     [1]Login as a Customer
     [2]Register as a new Customer
     [3]View All Cars Available for rent
@@ -156,12 +156,12 @@ def customer_menu():
 
 # i.	View all cars available for rent + Display all records of b. Cars available for Rent
 def view_car_available():
-    print("\n---All Records of Cars Available for Rent---")
+    print("\n---All Records of Cars Available for Rent---\n")
     for i in range(len(car_id)):
         if car_available[i] == "yes":
             print("Car ID: " + car_id[i])
-            print("Car Name: " + car_name[i])
-            print("--Car Details--\n" + car_details[i]+"\n")
+            print("Car Name: " + car_name[i].title())
+            print("--Car Details--\n" + (car_details[i].replace(" ","\n")).title()+"\n")
     x = input('''
     Records are shown above
     >>>Press Enter to return to Main Menu
@@ -173,21 +173,20 @@ def view_car_available():
 def new_customer():
     f = open("customer.txt", "a+")
     customer_data = f.readlines()
-    # input
-    # need add auto id
-    new_ctm_id = input("New Customer ID(eg: ctm1): ")
-    new_ctm_pass = input("Your Password: ")
+    new_ctm_id = ("ctm"+str(len(customer_id)+1))
     new_ctm_name = input("Your Name: ")
-    new_ctm_card = input("Your Card Number (16 Numbers): ")
+    new_ctm_pass = input("Your Password: ")
+    new_ctm_card = input("Your Card Number: ")
     # append to car_data list
     customer_data.append(new_ctm_id + ",")
     customer_data.append(new_ctm_pass + ",")
-    customer_data.append(new_ctm_name + ",")
+    customer_data.append(new_ctm_name.lower() + ",")
     customer_data.append("none,none,none,")
     customer_data.append(new_ctm_card + "\n")
     f.writelines(customer_data)
     f.close()
-    x = input('''
+    x = input(f'''
+    Your New Customer ID is {new_ctm_id}\n
     Register is successful !
     >>>Press Enter to Go to Customer Menu
     ''')
@@ -196,23 +195,30 @@ def new_customer():
 
 # i.	Login to Access System as a customer
 def login_customer():
-
     ctm_id_input = input("Please Enter Your ID: ")
-    ctm_password_input = input("Please Enter Your Password: ")
-
     for i in range(len(customer_id)):
         if ctm_id_input == customer_id[i]:
+            ctm_password_input = input("Please Enter Your Password: ")
             if ctm_password_input == customer_pass[i]:
                 registered_customer_menu(ctm_id_input)
-
-    print('''\nError Id or Password detected
-    >>> returning back to Customer Menu . . .''')
-    customer_menu()
+            else:
+                print('''\n
+                Wrong Password Entered
+                >>> returning back to Customer Menu . . .
+                ''')
+                customer_menu()
+        else:
+            print('''\n
+            Customer Id Not Found
+            >>> returning back to Customer Menu . . .
+            ''')
+            customer_menu()
 
 
 # After the login as a customer, registered customer menu interface
 def registered_customer_menu(ctm_id):
     print('''
+    -------Welcome To The Registered Customer Menu-------\n
     What would you like to do?
     [1]Modify Personal Details
     [2]View Details of Cars for Rent, Book and Pay
@@ -244,22 +250,21 @@ def registered_customer_menu(ctm_id):
 
 # ii. Modify Personal Details.
 def modify_customer_detail(ctm_id):
-    ctm_pass_input = input("\nTo modify your detail,\nPlease insert your password again:")
+    ctm_pass_input = input("\nTo modify your detail,\nPlease insert your password again: ")
 
     for i in range(len(customer_pass)):
         if ctm_pass_input == customer_pass[i]:
-            print("This is your current detail !\n")
+            print("This is your current detail!\n")
             print("ID: ", customer_id[i])
             print("Name: ", customer_name[i].title())
             print("Password: ", customer_pass[i])
             print("Card Number: ", customer_card[i])
             print('''
             What would you like to modify?
+            *Note that the ID is auto generated and can't be changed
             [1]Name
             [2]Password
             [3]Card Number
-
-            Or,
             [4]Back To Menu
             ''')
 
@@ -343,7 +348,7 @@ def rental_history(ctm_id):
 
 # iv. View Detail of Cars to be Rented Out.
 def view_car_details(ctm_id):
-    print("\n---All Records of Cars Available for Rent---")
+    print("\n---All Details of Cars Available for Rent---")
     for i in range(len(car_id)):
         if car_available[i] == "yes":
             print("Car ID: " + car_id[i])
@@ -409,10 +414,10 @@ def booking_payment(book_car_input,ctm_id):
                     print(f"Number of Days: {ctm_booking_duration}")
                     print(f"Total Payment: RM {total}")
                     print('''
-                    Confirm Payment?
-                    [1]Yes
-                    [2]Change Number of Days to Rent
-                    [3]View Details of Cars Available for Rent
+                    What would you like to?
+                    [1]Confirm Payment
+                    [2]Change Number Of Days To Rent The Car
+                    [3]Back To View Details Of Cars Available for Rent
                     '''
                     )
                     payment_option= input("Please Enter Your Option: ")
@@ -429,7 +434,6 @@ def booking_payment(book_car_input,ctm_id):
 
                         else:
                             payment_option= input("Please Enter Your Option: ")
-
 
 
 #-----------------------------------------Admin Functions---------------------------------------
