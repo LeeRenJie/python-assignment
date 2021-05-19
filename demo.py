@@ -35,7 +35,7 @@ vi. Do payment to confirm Booking.
 vii. Exit
 '''
 # python assignment demo
-from datetime import date
+from datetime import date, timedelta
 
 #Main menu, Ask identity of end user, either Customer or Admin
 def main_menu():
