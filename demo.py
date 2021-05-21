@@ -545,11 +545,13 @@ def admin_menu():
 
 # ii.	Add Cars to be rented out. 
 def new_car():
+    #fetch data from txt file using the get_data function
+    car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
     f = open("car.txt", "a+")
     #read data and store into list
     car_data = f.readlines()
     # prompt user for input of new car details
-    new_car_id = input("New Car ID(eg: car1): ")
+    new_car_id = ("car" + str(len(car_id)+1))
     new_car_name = input("New Car's Name: ")
     new_car_price = input("New Car's Price: ")
     is_car_available = "yes"
@@ -850,6 +852,5 @@ def specific_payment():
     >>>Press Enter to return to Admin Menu
     ''')
     admin_menu()
-
 
 main_menu()
