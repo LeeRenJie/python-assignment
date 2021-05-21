@@ -697,11 +697,13 @@ def admin_menu():
 
 # ii.	Add Cars to be rented out
 def new_car():
+    #fetch data from txt file using the get_data function
+    car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
     f = open("car.txt", "a+")
     #read data and store into list
     car_data = f.readlines()
     # prompt user for input of new car details
-    new_car_id = input("New Car ID(eg: car1): ")
+    new_car_id = ("car" + str(len(car_id)+1))
     new_car_name = input("New Car's Name: ")
     new_car_price = input("New Car's Price: ")
     is_car_available = "yes"
@@ -900,8 +902,18 @@ def payment_specific_time():
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
     print("\nPlease Enter a specific time to view all specific payments in 2021: ")
     #prompt for input of year, month ,date
-    start_year,start_month, start_day = int(input("Start Year:")), int(input("Start Month:")), int(input("Start Day:"))
-    end_year,end_month, end_day = int(input("End Year:")), int(input("End month:")), int(input("End day:"))
+    try:
+        start_year,start_month, start_day = int(input("Start Year:")), int(input("Start Month:")), int(input("Start Day:"))
+        end_year,end_month, end_day = int(input("End Year:")), int(input("End month:")), int(input("End day:"))
+    
+    #Validate to ensure an integer is entered
+    except ValueError:
+        x = input('''
+        >>>Value Error . . . Please enter a number
+        Press enter to return to admin menu...
+        ''')
+        admin_menu()
+
 
     #fit the input into a variable with date datatype
     start_date = date(start_year,start_month,start_day)
