@@ -1,4 +1,4 @@
-ctm3,car4,2,2021,2,1
-ctm1,car2,6,2021,2,16
-ctm2,car3,8,2021,3,2
-ctm1,car1,5,2021,5,6
+ctm3,car4,myvi,2,2021,2,1,600
+ctm1,car2,kancil,6,2021,2,16,1200
+ctm2,car3,mercedes,8,2021,3,2,4000
+ctm1,car1,ford ranger,5,2021,5,6,2000
