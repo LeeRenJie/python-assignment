@@ -189,7 +189,7 @@ def customer_menu():
         elif option2 == "2":
             new_customer()
         elif option2 == "3":
-            view_car_available()
+            view_car_available("1")
         elif option2 =="4":
             main_menu()
         else:
@@ -197,7 +197,7 @@ def customer_menu():
 
 
 # i.	View all cars available for rent + Display all records of b. Cars available for Rent
-def view_car_available():
+def view_car_available(number):
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
     print("\n---All Records of Cars Available for Rent---\n")
     for i in range(len(car_id)):
@@ -205,11 +205,20 @@ def view_car_available():
             print("Car ID: " + car_id[i])
             print("Car Name: " + car_name[i].title())
             print("--Car Details--\n" + (car_details[i].replace(" ","\n")).title()+"\n")
-    x = input('''
-    Records are shown above
-    >>>Press Enter to return to Main Menu
-    ''')
-    main_menu()
+    if number == "1":
+        x = input('''
+        Records are shown above
+        >>>Press Enter to return to Customer menu
+        ''')
+        customer_menu()
+
+    elif number == "2":
+        x = input('''
+        Records are shown above
+        >>>Press Enter to return to Admin Menu
+        ''')
+        admin_menu()
+
 
 
 # ii.	New customer Register to Access other Details
@@ -670,7 +679,7 @@ def admin_menu():
             all_rented_car()
 
         elif option3 == "5":
-            view_car_available()
+            view_car_available("2")
 
         elif option3 == "6":
             all_customer_booking()
@@ -739,11 +748,12 @@ def modify_car_detail():
     for i in range(len(car_id)):
         if id_input == car_id[i]:
             #Display current car details
-            print("This is the current car detail !\n")
-            print(car_id[i])
+            print("\n" + car_id[i])
+            print("car name: " + car_name[i])
+            print("--This is the current car details !--")
             print(car_details[i].replace(" ", "\n"))
             new_detail = input(
-                "\nWhat is the new color, horsepower and price of the car? eg:(color:** horsepower:** price:**\n")
+                "\nWhat is the new color, horsepower and price of the car? eg:(color:** horsepower:** price:**\)")
             car_details[i] = new_detail
 
             cars_data = open("car.txt", "w")
@@ -771,7 +781,7 @@ def modify_car_detail():
 
     x = input('''
     Car Detail failed to modify due to incorrect input . . .
-    >>>Returning to Admin Menu . . .
+    >>>Press enter to return to Admin Menu . . .
     ''')
     admin_menu()
 
@@ -977,12 +987,14 @@ def specific_booking():
     Records of Matched Criteria are shown above !
     >>>Press Enter to return to Admin Menu
     ''')
+    admin_menu()
 
 
 #v. Search Specific record of
 #b. Customer Payement
 def specific_payment():
     #fetch data from txt file using the get_data function
+    car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
     print("---Please Enter the following specific criteria---")
     #prompt input of name data and carID data
     criteria_customer = input("customer name: ")
