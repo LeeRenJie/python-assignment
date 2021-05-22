@@ -4,4 +4,4 @@ car3,mercedes,500,no,ctm2,chiang juo han,4000,8,2021,3,2,color:black horsepower:
 car4,myvi,300,no,ctm3,lee ren jie,600,2,2021,2,1,color:red horsepower:999 price:300
 car5,ferrari,1000,yes,none,none,none,none,none,none,none,color:green horsepower:666 price:1000
 car6,toyota,400,yes,none,none,none,none,none,none,none,color:blue horsepower:899 price:400
-car7,tesla,2000,yes,none,none,none,none,none,none,none,color:blue horsepower:996 price:2000
+car7,tesla,2000,yes,none,none,none,none,none,none,none,color:yellow horsepower:999 price:2500
