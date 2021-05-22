@@ -3,43 +3,14 @@
 # LEE YEE HAU
 # TP061065
 
-'''
-Functionalities of Admin
-
-i. Login to Access System.
-ii. Add Cars to be rented out. **
-iii. Modify Car Details **
-iv. Display All records of
-    a. Cars Rented Out
-    b. Cars available for Rent
-    c. Customer Bookings
-    d. Customer Payment for a specific time duration
-v. Search Specific record of
-    a. Customer Booking
-    b. Customer Payment
-vi. Return a Rented Car.
-vii. Exit
-
-Functionalities of All Customers (Registered / Not-Registered)
-i. View all cars available for rent. **
-ii. New customer Register to Access other Details **
-iii. Exit
-
-Functionalities of Registered Customer
-i. Login to Access System
-ii. Modify Personal Details.
-iii. View Personal Rental History.
-iv. View Detail of Cars to be Rented Out.
-v. Select and Book a car for a specific duration.
-vi. Do payment to confirm Booking.
-vii. Exit
-'''
-# python assignment demo
+# import date and timedelta from datetime module
 from datetime import date, timedelta
 
-#Main menu, Ask identity of end user, either Customer or Admin
+# Main menu, Ask identity of end user, either Customer or Admin
 def main_menu():
+    # Display today's date
     print(date.today())
+    # Display options for end users
     print('''
     -------Who are you?-------\n
     [1]Customer
@@ -47,8 +18,10 @@ def main_menu():
     [3]Exit\n
     ''')
 
+    # Receive input from end user
     option = input("Please Enter Your Option: ")
 
+    # Call functions based on end user's input
     while True:
         if option == "1":
             customer_menu()
@@ -56,36 +29,45 @@ def main_menu():
         elif option == "2":
             login_admin()
             break
+        # Exit program
         elif option == "3":
             quit()
-
+        # Validate user's input if none of the option is entered
         else:
             option = input("Please Enter Your Option: ")
 
 
 # --------------------------------------ADMIN DATA OPERATIONS----------------------------------------
-# Read data
+# Read data for admin and return the data in lists
 def read_admin_data():
+    # Open admin text file in read mode
     admin_data = open("admin.txt", "r")
+    # Read all lines in admin text file
     lines = admin_data.readlines()
 
+    # Create empty list for each type of data in admin text file
     admin_id = []
     admin_pass = []
 
+    # Append each type of data in their respective lists
     for admin in lines:
         admin_list = admin.split(" ")
         admin_id.append(admin_list[0])
         admin_pass.append(admin_list[1].replace("\n", ""))
 
+    # Return lists to be used in other functions to access the data
     return admin_id, admin_pass
 
 
 # ---------------------------------------CUSTOMER DATA OPERATIONS-------------------------------------------------
-# Read data
+# Read data for customer and return the data in lists
 def read_customer_data():
+    # Open customer text file in read mode
     customer_data = open("customer.txt", "r")
+    # Read all lines in customer text file
     lines = customer_data.readlines()
 
+    # Create empty list for each type of data in customer text file
     customer_id = []
     customer_pass = []
     customer_name = []
@@ -94,6 +76,7 @@ def read_customer_data():
     customer_duration = []
     customer_card = []
 
+    # Append each type of data in their respective lists
     for customer in lines:
         customer_list = customer.split(",")
         customer_id.append(customer_list[0])
@@ -104,14 +87,20 @@ def read_customer_data():
         customer_duration.append(customer_list[5])
         customer_card.append(customer_list[6].replace("\n", ""))
 
+    # Return lists to be used in other functions to access the data
+    # Destructure number of lists returned from get_data function
     return customer_id, customer_pass, customer_name, booked_car_name, customer_payment, customer_duration, customer_card
 
 
 # ---------------------------------------CAR DATA OPERATIONS-------------------------------------------------------
-# Read data
+# Read data for car and return the data in lists
 def read_car_data():
+    # Open car text file in read mode
     car_data = open("car.txt", "r")
+    # Read all lines in car text file
     lines = car_data.readlines()
+
+    # Create empty list for each type of data in car text file
     car_id = []
     car_name = []
     car_price = []
@@ -125,6 +114,7 @@ def read_car_data():
     payment_day = []
     car_details = []
 
+    # Append each type of data in their respective lists
     for car in lines:
         car_list = car.split(",")
         car_id.append(car_list[0])
@@ -140,15 +130,19 @@ def read_car_data():
         payment_day.append(car_list[10])
         car_details.append(car_list[11].replace("\n", ""))
 
+    # Return lists to be used in other functions to access the data
     return car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details
 
 
 # --------------------------------------RENTAL HISTORY OPERATIONS----------------------------------------
-# Read data
+# Read data for rental history and return the data in lists
 def read_history_data():
+    # Open rental history text file in read mode
     history_data = open("history.txt", "r")
+    # Read all lines in history text file
     lines = history_data.readlines()
 
+    # Create empty list for each type of data in history text file
     ctm_history_id = []
     car_history_id = []
     car_history_name = []
@@ -158,6 +152,7 @@ def read_history_data():
     history_day = []
     price_paid = []
 
+    # Append each type of data in their respective lists
     for history in lines:
         history_list = history.split(",")
         ctm_history_id.append(history_list[0])
@@ -169,10 +164,14 @@ def read_history_data():
         history_day.append(history_list[6])
         price_paid.append(history_list[7].replace("\n", ""))
 
+    # Return lists to be used in other functions to access the data
     return ctm_history_id, car_history_id, car_history_name, car_history_name, rental_duration, history_year, history_month, history_day, price_paid
 
+
 #----------------------------------------CUSTOMER FUNCTIONS-------------------------------------
+# Customer menu for non-registered customers
 def customer_menu():
+    # Display options for non-registered customers
     print('''
     -------Welcome To The Customer Menu-------\n
     [1]Login as a Customer
@@ -181,8 +180,10 @@ def customer_menu():
     [4]Back to Main Menu\n
     ''')
 
+    # Receive input from non-registered customers
     option2 = input("Please Enter Your Option: ")
 
+    # Call functions based on input
     while True:
         if option2 == "1":
             login_customer()
@@ -192,19 +193,25 @@ def customer_menu():
             view_car_available("1")
         elif option2 =="4":
             main_menu()
+        # Validate user's input if none of the option is entered
         else:
             option2 = input("Please Enter Your Option: ")
 
 
-# i.	View all cars available for rent + Display all records of b. Cars available for Rent
+# View all record of cars available for rent
+# Receive a number as argument as this function is used by both non-registered customer and admin
 def view_car_available(number):
+    # Destructure number of lists returned from get_data function
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
     print("\n---All Records of Cars Available for Rent---\n")
+    # Loop to display all cars available based on their data for "car_available"
     for i in range(len(car_id)):
         if car_available[i] == "yes":
             print("Car ID: " + car_id[i])
             print("Car Name: " + car_name[i].title())
             print("--Car Details--\n" + (car_details[i].replace(" ","\n")).title()+"\n")
+
+    # Based on the number passed in by both customer menu or admin menu, different output is shown and returned to different menus
     if number == "1":
         x = input('''
         Records are shown above
@@ -221,23 +228,30 @@ def view_car_available(number):
 
 
 
-# ii.	New customer Register to Access other Details
+# New customer register with their name, password and credit card number to access other functions
 def new_customer():
+    # Destructure number of lists returned from get_data function
     customer_id, customer_pass, customer_name, booked_car_name, customer_payment, customer_duration, customer_card = read_customer_data()
+
+    # Customer data file is opened in read and append mode to add in new customers in new line
     f = open("customer.txt", "a+")
     customer_data = f.readlines()
+    # Automatically sets ID for customer to prevent duplication
     new_ctm_id = ("ctm"+str(len(customer_id)+1))
+    # Receive new customer's data
     new_ctm_name = input("Your Name: ")
     new_ctm_pass = input("Your Password: ")
     new_ctm_card = input("Your Credit Card Number: ")
-    # append to car_data list
+    # Append new data to car_data list
     customer_data.append(new_ctm_id + ",")
     customer_data.append(new_ctm_pass + ",")
     customer_data.append(new_ctm_name.lower() + ",")
     customer_data.append("none,none,none,")
     customer_data.append(new_ctm_card + "\n")
+    # Write new data into customer text file and close file
     f.writelines(customer_data)
     f.close()
+    # Show customer their new ID and return back to menu
     x = input(f'''
     Your New Customer ID is {new_ctm_id}\n
     Register is successful !
@@ -246,22 +260,30 @@ def new_customer():
     customer_menu()
 
 
-# i.	Login to Access System as a customer
+# Login to Access more functions as a registered customer
 def login_customer():
+    # Destructure number of lists returned from get_data function
     customer_id, customer_pass, customer_name, booked_car_name, customer_payment, customer_duration, customer_card = read_customer_data()
+    # Prompt customer for ID
     ctm_id_input = input("Please Enter Your ID: ")
+    # Loop to check existing ID with customer inpuut
     for i in range(len(customer_id)):
         if customer_id[i] == ctm_id_input:
+            # Prompt customer for password if ID found
             ctm_password_input = input("Please Enter Your Password: ")
+            # If ID and password  are correct, customer will be authorized to use the registered customer menu
             if ctm_password_input == customer_pass[i]:
+                # customer_id is passed in as argument to ensure the same customer is using the program unless logged out
                 registered_customer_menu(ctm_id_input)
+            # If password is wrong, customer will be directed back to the customer menu
             else:
                 print('''\n
                 Wrong Password Entered
                 >>> returning back to Customer Menu . . .
                 ''')
                 customer_menu()
-        if i == (len(customer_id)-1):
+        # if the customer_id does not exist after looping, customer is directed back to customer menu
+        elif i == (len(customer_id)-1):
             print('''\n
             Customer Id Not Found
             >>> returning back to Customer Menu . . .
@@ -269,8 +291,9 @@ def login_customer():
             customer_menu()
 
 
-# After the login as a customer, registered customer menu interface
+# After customer has login, registered customer menu interface is displayed
 def registered_customer_menu(ctm_id):
+    # Options displayed
     print('''
     -------Registered Customer Menu-------\n
     What would you like to do?
@@ -281,8 +304,10 @@ def registered_customer_menu(ctm_id):
     [5]Exit\n
     ''')
 
+    # Prompt User for their option
     option3 = input("Please Enter Your Option: ")
     while True:
+        # Pass in customer ID (ctm_id) as argument for functions
         if option3 == "1":
             modify_customer_detail(ctm_id)
 
@@ -297,23 +322,28 @@ def registered_customer_menu(ctm_id):
 
         elif option3 == "5":
             quit()
-
+        # Validate user's input if none of the option is entered
         else:
             option3 = input("Please Enter Your Option: ")
 
 
-# ii. Modify Personal Details.
+# Modify Personal Details for registered customer.
 def modify_customer_detail(ctm_id):
+    # Destructure number of lists returned from get_data function
     customer_id, customer_pass, customer_name, booked_car_name, customer_payment, customer_duration, customer_card = read_customer_data()
+    # Authenticate customer again to add security before allowing change of customer information
     ctm_pass_input = input("\nTo modify your detail,\nPlease insert your password again: ")
 
-    for i in range(len(customer_pass)):
-        if ctm_pass_input == customer_pass[i]:
-            print("This is your current detail!\n")
-            print("ID: ", customer_id[i])
-            print("Name: ", customer_name[i].title())
-            print("Password: ", customer_pass[i])
-            print("Card Number: ", customer_card[i])
+    # Loop through to check if the customer_id is same with the login ID and customer password is for that customer
+    for i in range(len(customer_id)):
+        if (ctm_id == customer_id[i]) and (ctm_pass_input == customer_pass[i]):
+            # Display customer current details
+            print("\nThis is your current detail:")
+            print("ID:", customer_id[i])
+            print("Name:", customer_name[i].title())
+            print("Password:", customer_pass[i])
+            print("Card Number:", customer_card[i])
+            # Prompt customer for the details they would like to modify
             print('''
             What would you like to modify?
             *Note that the ID is auto generated and can't be changed
@@ -325,10 +355,8 @@ def modify_customer_detail(ctm_id):
 
             modify_option = input("Please Enter Your Option: ")
 
-            while True:
-                if modify_option == "1":
-                    new_name = input("\nWhat would you like to be called:")
-                    customer_name[i] = new_name.lower()
+            # Function to modify data in customer text file
+            def change_customer_data():
                     customer_data = open("customer.txt", "w")
                     for index in range(len(customer_id)):
                         customer_data.write(customer_id[index]+",")
@@ -344,69 +372,52 @@ def modify_customer_detail(ctm_id):
                     >>>Press Enter to return to Customer Menu
                     ''')
                     registered_customer_menu(ctm_id)
+
+            while True:
+                # Ask for new details based on customer's previous option and call function to change data in text file
+                if modify_option == "1":
+                    new_name = input("\nWhat would you like to be called:")
+                    customer_name[i] = new_name.lower()
+                    change_customer_data()
 
                 elif modify_option == "2":
                     new_password = input("\nWhat is your new password:")
                     customer_pass[i] = new_password
-                    customer_data = open("customer.txt", "w")
-                    for index in range(len(customer_id)):
-                        customer_data.write(customer_id[index]+",")
-                        customer_data.write(customer_pass[index]+",")
-                        customer_data.write(customer_name[index]+ ",")
-                        customer_data.write(booked_car_name[index]+",")
-                        customer_data.write(customer_payment[index]+",")
-                        customer_data.write(customer_duration[index]+",")
-                        customer_data.write(customer_card[index]+"\n")
-                    customer_data.close()
-                    x = input('''
-                    Done !
-                    >>>Press Enter to return to Customer Menu
-                    ''')
-                    registered_customer_menu(ctm_id)
+                    change_customer_data()
 
                 elif modify_option == "3":
                     new_card = input("\nWhat is your new card number(16 numbers):")
                     customer_card[i] = new_card
-                    customer_data = open("customer.txt", "w")
-                    for index in range(len(customer_id)):
-                        customer_data.write(customer_id[index]+",")
-                        customer_data.write(customer_pass[index]+",")
-                        customer_data.write(customer_name[index]+ ",")
-                        customer_data.write(booked_car_name[index]+",")
-                        customer_data.write(customer_payment[index]+",")
-                        customer_data.write(customer_duration[index]+",")
-                        customer_data.write(customer_card[index]+"\n")
-                    customer_data.close()
-                    x = input('''
-                    Done !
-                    >>>Press Enter to return to Customer Menu
-                    ''')
-                    registered_customer_menu(ctm_id)
+                    change_customer_data()
 
                 elif modify_option == "4":
                     registered_customer_menu(ctm_id)
-
+                # Validate user's input if none of the option is entered
                 else:
                     modify_option = input("Please Enter Your Option :")
 
 
-# iii. View Personal Rental History.
+# View Personal Rental History of customer.
 def rental_history(ctm_id):
+    # Destructure number of lists returned from get_data function
     customer_id, customer_pass, customer_name, booked_car_name, customer_payment, customer_duration, customer_card = read_customer_data()
     ctm_history_id, car_history_id, car_history_name, car_history_name, rental_duration, history_year, history_month, history_day, price_paid = read_history_data()
-
+    # Loop through customer_id to find the specific customer based on their login ID passed as argument
     for i in range(len(customer_id)):
         if customer_id[i] == ctm_id:
             print("Your ID: ", customer_id[i])
             print("Your Name: ", customer_name[i])
             print("\n-------------Rental History-------------")
+            # Loop through the history text file to search for customer ID that is the same with the login customer ID
             for index in range(len(ctm_history_id)):
+                # Display rental history if customer ID is found in history text file
                 if ctm_history_id[index] == ctm_id:
                     print("Car ID: ", car_history_id[index])
                     print("Car Name: ", car_history_name[index].title())
                     print("Rental Cost: RM", price_paid[index])
                     print(f"Duration: {rental_duration[index]} days")
                     print(f"Rented On: {history_day[index]}-{history_month[index]}-{history_year[index]}\n")
+            # Customer is then directed to return to registered customer menu
             x = input('''
             Rental history is shown above
             >>>Press Enter to return to Main Menu
@@ -414,15 +425,18 @@ def rental_history(ctm_id):
             registered_customer_menu(ctm_id)
 
 
-# iv. View Detail of Cars to be Rented Out.
+# View Detail of Cars to be Rented Out
 def view_car_details(ctm_id):
+    # Destructure number of lists returned from get_data function
     customer_id, customer_pass, customer_name, booked_car_name, customer_payment, customer_duration, customer_card = read_customer_data()
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
 
-    #check if customer already has a rented car
+    # Check if customer already has a rented car to prevent complication
     for i in range(len(customer_id)):
         if customer_id[i] == ctm_id:
+            # If the booked_car_name is not none, the customer has already rent a car
             if booked_car_name[i] != "none":
+                # Directs customer to return to registered customer menu if data shows a car is rented
                 x = input('''
                     Error: You have already rented a car
                     >>> if you have returned the car, please notify an admin to update your data or return the rented car.
@@ -431,12 +445,14 @@ def view_car_details(ctm_id):
                     ''')
                 registered_customer_menu(ctm_id)
 
+    # If customer has not rented a car, display details of available car
     print("\n---All Details of Cars Available for Rent---")
     for i in range(len(car_id)):
         if car_available[i] == "yes":
             print("Car ID: " + car_id[i])
             print("Car Name: " + car_name[i].title())
             print("--Car Details--\n" + (car_details[i].replace(" ", "\n").title()).replace("Price:", "Price Per Day:RM")+"\n")
+    # Prompt to get customer's option
     print('''
     What would you like to do?
     [1]Book A Car to Rent
@@ -444,25 +460,30 @@ def view_car_details(ctm_id):
     ''')
     ctm_option= input("Please Enter Your Option: ")
     while True:
+        # Call functions based on customer option and pass in customer ID as argument.
         if ctm_option == "1":
             book_car(ctm_id)
-
         elif ctm_option == "2":
             registered_customer_menu(ctm_id)
-
+        # Validate user's input if none of the option is entered
         else:
             ctm_option= input("Please Enter Your Option: ")
 
 
 # v. Select and Book a car for a specific duration.
 def book_car(ctm_id):
+    # Destructure number of lists returned from get_data function
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
+    # Prompt user to input car ID that they are interested to rent
     book_car_id = input(
         "\nTo book a car,\nPlease insert the Car ID: ")
+    # Loop through car text file to find the data for that specific car
     for i in range(len(car_id)):
         if (book_car_id == car_id[i]):
+            # Display details of car
             print("\nThis is the details of the car chosen:")
             print((car_details[i].replace(" ", "\n").title()).replace("Price:", "Price Per Day:RM"))
+            # Prompt customer for their option
             print('''
             What would you like to do?
             [1]Proceed To Payment
@@ -471,6 +492,7 @@ def book_car(ctm_id):
             '''
             )
             booking_option= input("Please Enter Your Option: ")
+            # Call functions based on their option and pass in arguments that are needed
             while True:
                 if booking_option == "1":
                     book_payment(book_car_id,ctm_id)
@@ -480,33 +502,40 @@ def book_car(ctm_id):
 
                 elif booking_option == "3":
                     view_car_details(ctm_id)
-
+                # Validate user's input if none of the option is entered
                 else:
                     booking_option= input("Please Enter Your Option: ")
 
 
-# vi. Do payment to confirm Booking.
+# Do payment to confirm booking.
 def book_payment(book_car_id,ctm_id):
+    # Destructure number of lists returned from get_data function
     customer_id, customer_pass, customer_name, booked_car_name, customer_payment, customer_duration, customer_card = read_customer_data()
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
+    #validation to make sure customer enters a number
     try:
         ctm_booking_duration = int(input("How many days would you like to rent the car?: "))
-    #validation to make sure customer enters a number
+    # Returns error if not an integer is entered
     except ValueError:
         print('''
             ERROR
-            >>> Please enter a valid number
+            >>> Please enter a valid or whole number
             ''')
+        # Repeat execution of this function to ask for duration to rent again
         book_payment(book_car_id,ctm_id)
+    # Loop through customer ID to find the specific customer
     for i in range(len(customer_id)):
         if ctm_id == customer_id[i]:
+            # If customer ID found, loop through car ID to find the specific car the customer is interested
             for index in range(len(car_id)):
                 if (book_car_id == car_id[index]):
+                    # Display information for payment
                     print("\nYour Credit Card Number: ", customer_card[i])
                     total = (ctm_booking_duration) * int(car_price[index])
                     print(f"Car Name: {car_name[index].title()}")
                     print(f"Number of Days: {ctm_booking_duration}")
                     print(f"Total Payment: RM {total}")
+                    # Prompt customer for their option
                     print('''
                     What would you like to?
                     [1]Confirm Payment
@@ -516,8 +545,10 @@ def book_payment(book_car_id,ctm_id):
                     )
                     payment_option= input("Please Enter Your Option: ")
                     while True:
+                        # Call functions based on customer's option
                         if payment_option == "1":
                             chosen_car = car_name[index]
+                            # Call update_data function to update all related files after customer confirmed to rent
                             update_data(book_car_id, ctm_id, str(ctm_booking_duration), str(total), chosen_car)
                             x = input(f'''
                             Payment Completed!
@@ -532,19 +563,22 @@ def book_payment(book_car_id,ctm_id):
 
                         elif payment_option == "3":
                             view_car_details(ctm_id)
-
+                        # Validate user's input if none of the option is entered
                         else:
                             payment_option= input("Please Enter Your Option: ")
 
 
 def update_data(book_car_id, ctm_id, ctm_booking_duration, total, chosen_car):
+    # Destructure number of lists returned from get_data function
     customer_id, customer_pass, customer_name, booked_car_name, customer_payment, customer_duration, customer_card = read_customer_data()
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
 
+    # Get current year, month, and day at the time when user rent the car
     year = []
     month = []
     day = []
 
+    # Append each data into a list
     date_list = str(date.today()).split("-")
     year.append(date_list[0])
     if date_list[1] == "10":
@@ -553,11 +587,11 @@ def update_data(book_car_id, ctm_id, ctm_booking_duration, total, chosen_car):
         month.append(str(date_list[1].replace("0","")))
     day.append(date_list[2])
 
-    #update history data
+    # Update history data
     f = open("history.txt", "a+")
-    #read data and store into list
+    # Read data and store into list
     history_data = f.readlines()
-    # append to history_data list
+    # Append to history_data list
     history_data.append(ctm_id + ",")
     history_data.append(book_car_id + ",")
     history_data.append(chosen_car + ",")
@@ -566,18 +600,18 @@ def update_data(book_car_id, ctm_id, ctm_booking_duration, total, chosen_car):
     history_data.append(month[0] + ",")
     history_data.append(day[0] + ",")
     history_data.append(total + "\n")
-    #write new data from list into txt file
+    # Write new data from list into txt file
     f.writelines(history_data)
     f.close()
 
+    # Update customer data
     for i in range(len(customer_id)):
         if ctm_id == customer_id[i]:
             booked_car_name[i] = chosen_car
             customer_payment[i] = total
             customer_duration[i] = ctm_booking_duration
-            #update customer data
             customer_data = open("customer.txt", "w")
-            #Use loops to rewrite customer data in text file
+            # Use loop to rewrite customer data in text file
             for index in range(len(customer_id)):
                 customer_data.write(customer_id[index]+",")
                 customer_data.write(customer_pass[index]+",")
@@ -588,6 +622,7 @@ def update_data(book_car_id, ctm_id, ctm_booking_duration, total, chosen_car):
                 customer_data.write(customer_card[index]+"\n")
             customer_data.close()
 
+    # Update customer data
     for i in range(len(car_id)):
             if book_car_id == car_id[i]:
                 for index in range(len(customer_id)):
@@ -600,9 +635,8 @@ def update_data(book_car_id, ctm_id, ctm_booking_duration, total, chosen_car):
                 payment_year[i] = year[0]
                 payment_month[i] = month[0]
                 payment_day[i] = day[0]
-                #update cars data
                 cars_data = open("car.txt", "w")
-                #Use loops to rewrite car data in text file
+                # Use loop to rewrite car data in text file
                 for l in range(len(car_id)):
                     cars_data.write(car_id[l]+",")
                     cars_data.write(car_name[l]+",")
@@ -619,8 +653,7 @@ def update_data(book_car_id, ctm_id, ctm_booking_duration, total, chosen_car):
                 cars_data.close()
 
 #-----------------------------------------Admin Functions---------------------------------------
-#Functionality of Admin
-#i. Login to Access System.
+# Login to Access System.
 def login_admin():
     admin_id, admin_pass = read_admin_data()
     #Prompt user to input admin id and password
@@ -640,7 +673,7 @@ def login_admin():
     main_menu()
 
 
-# after the login as an admin, admin menu interface
+# After the login as an admin, admin menu interface
 def admin_menu():
     #Display Admin command line interface
     print('''
@@ -704,27 +737,27 @@ def admin_menu():
             option3 = input("Please Enter Your Option :")
 
 
-# ii.	Add Cars to be rented out
+# Add Cars to be rented out
 def new_car():
-    #fetch data from txt file using the get_data function
+    # Destructure number of lists returned from get_data function
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
     f = open("car.txt", "a+")
-    #read data and store into list
+    # Read data and store into list
     car_data = f.readlines()
-    # prompt user for input of new car details
+    # Prompt user for input of new car details
     new_car_id = ("car" + str(len(car_id)+1))
     new_car_name = input("New Car's Name: ")
     new_car_price = input("New Car's Price: ")
     is_car_available = "yes"
     new_car_details = input("Car details(eg: color:red horsepower:130 price:200):")
-    # append to car_data list
+    # Append to car_data list
     car_data.append(new_car_id + ",")
     car_data.append(new_car_name + ",")
     car_data.append(new_car_price + ",")
     car_data.append(is_car_available + ",")
     car_data.append("none,none,none,none,none,none,none,")
     car_data.append(new_car_details + "\n")
-    #write new data into txt file
+    # Write new data into txt file
     f.writelines(car_data)
     f.close()
 
@@ -736,18 +769,18 @@ def new_car():
     admin_menu()
 
 
-# iii.	Modify Car Details
+# Modify Car Details
 def modify_car_detail():
-    #fetch data from txt file using the get_data function
+    # Destructure number of lists returned from get_data function
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
-    #Prompt user input of carID
+    # Prompt user input of carID
     id_input = input(
         "To modify the car detail,\nPlease insert the car ID of the car:")
 
-    #Loop through txt file with car ID to find the matched car
+    # Loop through txt file with car ID to find the matched car
     for i in range(len(car_id)):
         if id_input == car_id[i]:
-            #Display current car details
+            # Display current car details
             print("\n" + car_id[i])
             print("car name: " + car_name[i])
             print("--This is the current car details !--")
@@ -758,7 +791,7 @@ def modify_car_detail():
 
             cars_data = open("car.txt", "w")
 
-            #Use loops to rewrite car details in txt file
+            # Use loops to rewrite car details in txt file
             for l in range(len(car_id)):
                 cars_data.write(car_id[l]+",")
                 cars_data.write(car_name[l]+",")
@@ -786,30 +819,30 @@ def modify_car_detail():
     admin_menu()
 
 
-# vi. Return a Rented Car.
+# Return a Rented Car.
 def return_rented_car():
-    #fetch data from txt file using the get_data function
+    # Destructure number of lists returned from get_data function
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
-    #prompt input from user to enter car ID
+    # Prompt input from user to enter car ID
     id_input = input("Please Enter the Car ID of the rented car :")
-    #loop through txt file to find cars that are rented out
+    # Loop through txt file to find cars that are rented out
     for i in range(len(car_id)):
         if id_input == car_id[i]:
             if car_available[i].replace(" ", "") == "no":
                 print(
                     "\nPlease Check the details of the customer to return a rented car\n")
-                #Display customer, booking and payment data
+                # Display customer, booking and payment data
                 print("Customer Name: ", booking_customer[i])
                 print("Booking duration (Nth days) : ", booking_duration[i])
                 print("Total Payment: ", booking_payment[i])
 
-                #Give user the option to either return to admin menu(if customer details is wrong) or continue
+                # Give user the option to either return to admin menu(if customer details is wrong) or continue
                 random_input = input(
                     "\n[1]Back to Admin Menu \nOr press anything to continue . . .")
                 if random_input == "1":
                     admin_menu()
 
-                #Clear previous customer data(payment/booking)
+                # Clear previous customer data(payment/booking)
                 car_available[i] = "yes"
                 ctm_key[i] = "none"
                 booking_customer[i] = "none"
@@ -820,7 +853,7 @@ def return_rented_car():
                 payment_day[i] = "none"
 
                 cars_data = open("car.txt", "w")
-                #Loop to overwrite the txt file with new data
+                # Loop to overwrite the txt file with new data
                 for l in range(len(car_id)):
                     cars_data.write(car_id[l]+",")
                     cars_data.write(car_name[l]+",")
@@ -849,26 +882,26 @@ def return_rented_car():
     admin_menu()
 
 
-# display all records of a. Cars Rented Out
+# Display all records of Cars Rented Out
 def all_rented_car():
-    #fetch data from txt file using the get_data function
+    # Destructure number of lists returned from get_data function
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
     print("\n---All Records of Rented Cars---")
-    #loop through txt file to find cars that are not available/rented out
+    # Loop through txt file to find cars that are not available/rented out
     for i in range(len(car_id)):
         if car_available[i].replace(" ", "") == "no":
-            #Display car data, customer and payment data
+            # Display car data, customer and payment data
             print("car id: " + car_id[i])
             print("car name: " + car_name[i])
             print("customer name: " + booking_customer[i])
             print("Total payment: " + booking_payment[i])
             print("Booking Duration (Nth day): " + booking_duration[i])
             print("---Car details---\n" + car_details[i])
-            #Take booking duration data from txt file and insert into variable as Integer
+            # Take booking duration data from txt file and insert into variable as Integer
             add_num = int(booking_duration[i])
             add_num_new = timedelta(add_num)
 
-            #Take payment date data from txt file and insert into variable as Integer
+            # Take payment date data from txt file and insert into variable as Integer
             check_year = int(payment_year[i])
             check_month = int(payment_month[i])
             check_day = int(payment_day[i])
@@ -881,12 +914,12 @@ def all_rented_car():
 
 # Display all records of c. Customer Bookings
 def all_customer_booking():
-    #fetch data from txt file using the get_data function
+    # Destructure number of lists returned from get_data function
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
-    #loop through txt file to find cars that are booked by customers
+    # Loop through txt file to find cars that are booked by customers
     for i in range(len(car_id)):
         if car_available[i].replace(" ", "") == "no":
-            #Display customer and car data
+            # Display customer and car data
             print("customer name: " + booking_customer[i])
             print("Total payment: " + booking_payment[i])
             print("Booking Duration (Nth day): " + booking_duration[i])
@@ -895,7 +928,7 @@ def all_customer_booking():
             add_num = int(booking_duration[i])
             add_num_new = timedelta(add_num)
 
-            #Take payment date data from txt file and insert into variable as Integer
+            # Take payment date data from txt file and insert into variable as Integer
             check_year = int(payment_year[i])
             check_month = int(payment_month[i])
             check_day = int(payment_day[i])
@@ -906,17 +939,17 @@ def all_customer_booking():
     admin_menu()
 
 
-#all records of d. Customer Payment for a specific time duration
+# All records of Customer Payment for a specific time duration
 def payment_specific_time():
-    #fetch data from txt file using the get_data function
+    # Destructure number of lists returned from get_data function
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
     print("\nPlease Enter a specific time to view all specific payments in 2021: ")
-    #prompt for input of year, month ,date
+    # Prompt for input of year, month ,date
     try:
         start_year,start_month, start_day = int(input("Start Year:")), int(input("Start Month:")), int(input("Start Day:"))
         end_year,end_month, end_day = int(input("End Year:")), int(input("End month:")), int(input("End day:"))
-    
-    #Validate to ensure an integer is entered
+
+    # Validate to ensure an integer is entered
     except ValueError:
         x = input('''
         >>>Value Error . . . Please enter a number
@@ -925,23 +958,23 @@ def payment_specific_time():
         admin_menu()
 
 
-    #fit the input into a variable with date datatype
+    # Fit the input into a variable with date datatype
     start_date = date(start_year,start_month,start_day)
     end_date = date(end_year,end_month,end_day)
 
     print("\n---All Payments between "  + str(start_date) + " and " + str(end_date) + "---")
-    #loop through txt file to find match date
+    # Loop through txt file to find match date
     for i in range(len(car_id)):
         if payment_month[i] != "none":
-            #turn datatype of data from str into int
+            # Turn datatype of data from str into int
             check_year = int(payment_year[i])
             check_month = int(payment_month[i])
             check_day = int(payment_day[i])
 
-            #fit integers into variable using date class imported to create a date datatype variable
+            # Fit integers into variable using date class imported to create a date datatype variable
             actual_date = date(check_year,check_month,check_day)
 
-            #Use comparison to find data that its date is between the start and end date
+            # Use comparison to find data that its date is between the start and end date
             if start_date < actual_date < end_date:
                 print("\nCustomer Name: " + booking_customer[i])
                 print("Payment Date\nMonth:" + str(date(check_year,check_month,check_day)))
@@ -951,32 +984,31 @@ def payment_specific_time():
     admin_menu()
 
 
-#v. Search Specific record of
-#a. Customer Booking #add date to return car
+# Specific record of Customer Booking, add date to return car
 def specific_booking():
-    #fetch data from txt file using the get_data function
+    # Destructure number of lists returned from get_data function
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
     print("---Please Enter the following specific criteria---")
-    #prompt for input on customer name and car ID
+    # Prompt for input on customer name and car ID
     criteria_customer = input("customer name: ")
     criteria_id = input("Booked Car Id: ")
 
     print("\n--Records of Customer Booking is shown below--")
-    #loop to search for similar data comparing txt file & input with (==/is equals to) operator
+    # Loop to search for similar data comparing txt file & input with (==/is equals to) operator
     for i in range(len(car_id)):
         if booking_customer[i].replace(" ", "") == criteria_customer:
             if car_id[i].replace(" ", "") == criteria_id:
-                #Display data obtained from txt file
+                # Display data obtained from txt file
                 print("Customer Name: " + booking_customer[i])
                 print("Booked Car: " + car_name[i])
                 print("Booked Car ID: " + car_id[i])
                 print("Booking Duration: " + booking_duration[i] + "days\n")
 
-                #Take booking duration data from txt file and insert into variable as Integer
+                # Take booking duration data from txt file and insert into variable as Integer
                 add_num = int(booking_duration[i])
                 add_num_new = timedelta(add_num)
 
-                #Take payment date data from txt file and insert into variable as Integer
+                # Take payment date data from txt file and insert into variable as Integer
                 check_year = int(payment_year[i])
                 check_month = int(payment_month[i])
                 check_day = int(payment_day[i])
@@ -990,32 +1022,31 @@ def specific_booking():
     admin_menu()
 
 
-#v. Search Specific record of
-#b. Customer Payement
+# Search Specific record of Customer Payement
 def specific_payment():
-    #fetch data from txt file using the get_data function
+    # Destructure number of lists returned from get_data function
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
     print("---Please Enter the following specific criteria---")
-    #prompt input of name data and carID data
+    # Prompt input of name data and carID data
     criteria_customer = input("customer name: ")
     criteria_id = input("Booked Car Id: ")
 
     print("\n--Records of Customer Booking is shown below--")
-    #loop to search for similar data comparing txt file & input with (==/is equals to) operator
+    # Loop to search for similar data comparing txt file & input with (==/is equals to) operator
     for i in range(len(car_id)):
         if booking_customer[i].replace(" ","") == criteria_customer:
             if car_id[i].replace(" ","") == criteria_id:
-                #display name and amount of payment of matched criteria
+                # Display name and amount of payment of matched criteria
                 print("Customer Name: " + booking_customer[i])
                 print("Total payment: " + booking_payment[i])
 
-                #Take payment date data from txt file and insert into variable as Integer (from str to int)
+                # Take payment date data from txt file and insert into variable as Integer (from str to int)
                 check_year = int(payment_year[i])
                 check_month = int(payment_month[i])
                 check_day = int(payment_day[i])
-                #convert to date datatype
+                # Convert to date datatype
                 payment_date = date(check_year,check_month,check_day)
-                #display the payment date
+                # Display the payment date
                 print("Payment done on: " + str(payment_date)+"\n")
 
     x=input('''
