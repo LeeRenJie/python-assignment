@@ -227,7 +227,6 @@ def view_car_available(number):
         admin_menu()
 
 
-
 # New customer register with their name, password and credit card number to access other functions
 def new_customer():
     # Destructure number of lists returned from get_data function
@@ -241,13 +240,23 @@ def new_customer():
     # Receive new customer's data
     new_ctm_name = input("Your Name: ")
     new_ctm_pass = input("Your Password: ")
-    new_ctm_card = input("Your Credit Card Number: ")
+    #validation to make sure customer enters a number
+    try:
+        new_ctm_card = int(input("Your Credit Card Number: "))
+    # Returns error if not an integer is entered
+    except ValueError:
+        print('''
+            ERROR
+            >>> Please enter a valid credit card number without characters or decimals
+            ''')
+        # Repeat execution of this function to ask for the right credit card number
+        new_customer()
     # Append new data to car_data list
     customer_data.append(new_ctm_id + ",")
     customer_data.append(new_ctm_pass + ",")
     customer_data.append(new_ctm_name.lower() + ",")
     customer_data.append("none,none,none,")
-    customer_data.append(new_ctm_card + "\n")
+    customer_data.append(str(new_ctm_card) + "\n")
     # Write new data into customer text file and close file
     f.writelines(customer_data)
     f.close()
@@ -298,7 +307,7 @@ def registered_customer_menu(ctm_id):
     -------Registered Customer Menu-------\n
     What would you like to do?
     [1]Modify Personal Details
-    [2]View Details of Cars for Rent, Book and Pay
+    [2]View Details of Cars for Rent, Book a car and Pay
     [3]View Personal Rental History
     [4]Return to Main Menu
     [5]Exit\n
@@ -376,25 +385,35 @@ def modify_customer_detail(ctm_id):
             while True:
                 # Ask for new details based on customer's previous option and call function to change data in text file
                 if modify_option == "1":
-                    new_name = input("\nWhat would you like to be called:")
+                    new_name = input("\nWhat would you like to be called: ")
                     customer_name[i] = new_name.lower()
                     change_customer_data()
 
                 elif modify_option == "2":
-                    new_password = input("\nWhat is your new password:")
+                    new_password = input("\nWhat is your new password: ")
                     customer_pass[i] = new_password
                     change_customer_data()
 
                 elif modify_option == "3":
-                    new_card = input("\nWhat is your new card number(16 numbers):")
-                    customer_card[i] = new_card
-                    change_customer_data()
+                    #validation to make sure customer enters a number
+                    try:
+                        new_card = int(input("\nWhat is your new card number(16 numbers): "))
+                        customer_card[i] = str(new_card)
+                        change_customer_data()
+                    # Returns error if not an integer is entered
+                    except ValueError:
+                        print('''
+                            ERROR
+                            >>> Please enter a valid credit card number without characters or decimals
+                            ''')
+                        # Repeat execution of this function to ask for the right credit card number again
+                        modify_customer_detail(ctm_id)
 
                 elif modify_option == "4":
                     registered_customer_menu(ctm_id)
                 # Validate user's input if none of the option is entered
                 else:
-                    modify_option = input("Please Enter Your Option :")
+                    modify_option = input("Please Enter Your Option: ")
 
 
 # View Personal Rental History of customer.
@@ -405,18 +424,25 @@ def rental_history(ctm_id):
     # Loop through customer_id to find the specific customer based on their login ID passed as argument
     for i in range(len(customer_id)):
         if customer_id[i] == ctm_id:
-            print("Your ID: ", customer_id[i])
-            print("Your Name: ", customer_name[i])
+            print("Your ID:", customer_id[i])
+            print("Your Name:", customer_name[i])
             print("\n-------------Rental History-------------")
             # Loop through the history text file to search for customer ID that is the same with the login customer ID
             for index in range(len(ctm_history_id)):
                 # Display rental history if customer ID is found in history text file
                 if ctm_history_id[index] == ctm_id:
-                    print("Car ID: ", car_history_id[index])
-                    print("Car Name: ", car_history_name[index].title())
-                    print("Rental Cost: RM", price_paid[index])
+                    print("Car ID:", car_history_id[index])
+                    print("Car Name:", car_history_name[index].title())
+                    print("Rental Cost:RM", price_paid[index])
                     print(f"Duration: {rental_duration[index]} days")
                     print(f"Rented On: {history_day[index]}-{history_month[index]}-{history_year[index]}\n")
+                # If no history found
+                else:
+                    x = input('''
+                    No Rental history is found
+                    >>>Press Enter to return to Main Menu
+                    ''')
+                    registered_customer_menu(ctm_id)
             # Customer is then directed to return to registered customer menu
             x = input('''
             Rental history is shown above
