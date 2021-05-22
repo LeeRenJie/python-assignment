@@ -541,7 +541,7 @@ def book_payment(book_car_id,ctm_id):
     #validation to make sure customer enters a number
     try:
         ctm_booking_duration = int(input("How many days would you like to rent the car?: "))
-    # Returns error if not an integer is entered
+    # Validate to ensure an integer is entered
     except ValueError:
         print('''
             ERROR
@@ -772,14 +772,32 @@ def new_car():
     car_data = f.readlines()
     # Prompt user for input of new car details
     new_car_id = ("car" + str(len(car_id)+1))
-    new_car_name = input("New Car's Name: ")
-    new_car_price = input("New Car's Price: ")
+    new_car_name = input("New Car's Name: ").lower()
+    try:
+        new_car_price = int(input("New Car's Price: "))
+    except ValueError:
+        x = input('''
+        >>>Value Error . . . Please enter a number
+        Press enter to return to admin menu...
+        ''')
+        admin_menu()
     is_car_available = "yes"
-    new_car_details = input("Car details(eg: color:red horsepower:130 price:200):")
+    color = input("What is the color of the car?:")
+    try:
+        horsepower = int(input("What is the Horsepower of the car?:"))
+        price = int(input("What is the price of the car rental?:"))
+    # Validate to ensure an integer is entered
+    except ValueError:
+        x = input('''
+        >>>Value Error . . . Please enter a number
+        Press enter to return to admin menu...
+        ''')
+        admin_menu()
+    new_car_details = ("color:" + color + " horsepower:" + str(horsepower) + " price:" + str(price))
     # Append to car_data list
     car_data.append(new_car_id + ",")
     car_data.append(new_car_name + ",")
-    car_data.append(new_car_price + ",")
+    car_data.append(str(new_car_price) + ",")
     car_data.append(is_car_available + ",")
     car_data.append("none,none,none,none,none,none,none,")
     car_data.append(new_car_details + "\n")
@@ -811,8 +829,19 @@ def modify_car_detail():
             print("car name: " + car_name[i])
             print("--This is the current car details !--")
             print(car_details[i].replace(" ", "\n"))
-            new_detail = input(
-                "\nWhat is the new color, horsepower and price of the car? eg:(color:** horsepower:** price:**\)")
+            #prompt for input of new car details
+            color = input("What is the color of the car?:")
+            try:
+                horsepower = int(input("What is the Horsepower of the car?:"))
+                price = int(input("What is the price of the car rental?:"))
+            # Validate to ensure an integer is entered
+            except ValueError:
+                x = input('''
+                >>>Value Error . . . Please enter a number
+                Press enter to return to admin menu...
+                ''')
+                admin_menu()
+            new_detail = ("color:" + color + " horsepower:" + str(horsepower) + " price:" + str(price))
             car_details[i] = new_detail
 
             cars_data = open("car.txt", "w")
@@ -942,6 +971,7 @@ def all_rented_car():
 def all_customer_booking():
     # Destructure number of lists returned from get_data function
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
+    print("\n---All records of Customer bookings---")
     # Loop through txt file to find cars that are booked by customers
     for i in range(len(car_id)):
         if car_available[i].replace(" ", "") == "no":
@@ -974,6 +1004,9 @@ def payment_specific_time():
     try:
         start_year,start_month, start_day = int(input("Start Year:")), int(input("Start Month:")), int(input("Start Day:"))
         end_year,end_month, end_day = int(input("End Year:")), int(input("End month:")), int(input("End day:"))
+        # Fit the input into a variable with date datatype
+        start_date = date(start_year,start_month,start_day)
+        end_date = date(end_year,end_month,end_day)
 
     # Validate to ensure an integer is entered
     except ValueError:
@@ -1003,7 +1036,7 @@ def payment_specific_time():
             # Use comparison to find data that its date is between the start and end date
             if start_date < actual_date < end_date:
                 print("\nCustomer Name: " + booking_customer[i])
-                print("Payment Date\nMonth:" + str(date(check_year,check_month,check_day)))
+                print("Payment Date:" + str(date(check_year,check_month,check_day)))
                 print("Total payment: " + booking_payment[i] + "\n")
 
     x = input("\nPress Enter to return to admin menu . . .")
@@ -1041,8 +1074,13 @@ def specific_booking():
                 return_date = date(check_year,check_month,check_day) + add_num_new
                 print("The date to return the car: " + str(return_date))
 
+                x=input('''
+                Records of Matched Criteria are shown above !
+                >>>Press Enter to return to Admin Menu
+                ''')
+                admin_menu()
     x=input('''
-    Records of Matched Criteria are shown above !
+    No records are found with the given criteria!
     >>>Press Enter to return to Admin Menu
     ''')
     admin_menu()
@@ -1075,8 +1113,13 @@ def specific_payment():
                 # Display the payment date
                 print("Payment done on: " + str(payment_date)+"\n")
 
+                x=input('''
+                Records of Matched Criteria are shown above !
+                >>>Press Enter to return to Admin Menu
+                ''')
+                admin_menu()
     x=input('''
-    Records of Matched Criteria are shown above !
+    No records are found with the given criteria!
     >>>Press Enter to return to Admin Menu
     ''')
     admin_menu()
