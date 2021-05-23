@@ -732,7 +732,7 @@ def admin_menu():
         elif option3 == "11":
             quit()
 
-        #keep prompting user for input if they enter a wrong input
+        # Validate user's input if none of the option is entered
         else:
             option3 = input("Please Enter Your Option :")
 
