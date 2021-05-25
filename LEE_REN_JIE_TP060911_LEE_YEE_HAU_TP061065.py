@@ -842,6 +842,7 @@ def modify_car_detail():
                 ''')
                 admin_menu()
             new_detail = ("color:" + color + " horsepower:" + str(horsepower) + " price:" + str(price))
+            car_price[i] = str(price)
             car_details[i] = new_detail
 
             cars_data = open("car.txt", "w")
