@@ -773,14 +773,6 @@ def new_car():
     # Prompt user for input of new car details
     new_car_id = ("car" + str(len(car_id)+1))
     new_car_name = input("New Car's Name: ").lower()
-    try:
-        new_car_price = int(input("New Car's Price: "))
-    except ValueError:
-        x = input('''
-        >>>Value Error . . . Please enter a number
-        Press enter to return to admin menu...
-        ''')
-        admin_menu()
     is_car_available = "yes"
     color = input("What is the color of the car?:")
     try:
@@ -797,7 +789,7 @@ def new_car():
     # Append to car_data list
     car_data.append(new_car_id + ",")
     car_data.append(new_car_name + ",")
-    car_data.append(str(new_car_price) + ",")
+    car_data.append(str(price) + ",")
     car_data.append(is_car_available + ",")
     car_data.append("none,none,none,none,none,none,none,")
     car_data.append(new_car_details + "\n")
