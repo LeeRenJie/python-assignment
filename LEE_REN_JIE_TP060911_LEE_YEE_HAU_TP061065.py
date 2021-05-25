@@ -286,16 +286,16 @@ def login_customer():
                 registered_customer_menu(ctm_id_input)
             # If password is wrong, customer will be directed back to the customer menu
             else:
-                print('''\n
+                x = input('''\n
                 Wrong Password Entered
-                >>> returning back to Customer Menu . . .
+                >>> Press enter to return back to Customer Menu . . .
                 ''')
                 customer_menu()
         # if the customer_id does not exist after looping, customer is directed back to customer menu
         elif i == (len(customer_id)-1):
-            print('''\n
+            x = input('''\n
             Customer Id Not Found
-            >>> returning back to Customer Menu . . .
+            >>> Press enter to return back to Customer Menu . . .
             ''')
             customer_menu()
 
@@ -694,7 +694,7 @@ def login_admin():
 
     x = input('''
     Error ID or Password detected
-    returning back to main menu . . .
+    Press enter to return back to main menu . . .
     ''')
     main_menu()
 
