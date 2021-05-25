@@ -174,8 +174,8 @@ def customer_menu():
     # Display options for non-registered customers
     print('''
     -------Welcome To The Customer Menu-------\n
-    [1]Login as a Customer
-    [2]Register as a new Customer
+    [1]Log in as a Customer
+    [2]Register as a New Customer
     [3]View All Cars Available for rent
     [4]Back to Main Menu\n
     ''')
