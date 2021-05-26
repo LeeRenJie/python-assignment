@@ -263,8 +263,8 @@ def new_customer():
     # Show customer their new ID and return back to menu
     x = input(f'''
     Your New Customer ID is {new_ctm_id}\n
-    Register is successful !
-    >>>Press Enter to Go to Customer Menu
+    Register is successful!
+    >>>Press Enter to return to Customer Menu
     ''')
     customer_menu()
 
