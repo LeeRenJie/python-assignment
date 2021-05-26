@@ -997,10 +997,7 @@ def payment_specific_time():
     try:
         start_year,start_month, start_day = int(input("Start Year:")), int(input("Start Month:")), int(input("Start Day:"))
         end_year,end_month, end_day = int(input("End Year:")), int(input("End month:")), int(input("End day:"))
-        # Fit the input into a variable with date datatype
-        start_date = date(start_year,start_month,start_day)
-        end_date = date(end_year,end_month,end_day)
-
+        
     # Validate to ensure an integer is entered
     except ValueError:
         x = input('''
