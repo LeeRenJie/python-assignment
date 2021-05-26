@@ -294,7 +294,7 @@ def login_customer():
         # if the customer_id does not exist after looping, customer is directed back to customer menu
         elif i == (len(customer_id)-1):
             x = input('''\n
-            Customer Id Not Found
+            Customer ID Not Found
             >>> Press enter to return back to Customer Menu . . .
             ''')
             customer_menu()
