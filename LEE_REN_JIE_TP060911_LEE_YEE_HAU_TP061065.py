@@ -1026,7 +1026,7 @@ def payment_specific_time():
             # Use comparison to find data that its date is between the start and end date
             if start_date < actual_date < end_date:
                 print("\nCustomer Name: " + booking_customer[i])
-                print("Payment Date:" + str(date(check_year,check_month,check_day)))
+                print("Payment Date:" + str(actual_date))
                 print("Total payment: " + booking_payment[i] + "\n")
 
     x = input("\nPress Enter to return to admin menu . . .")
