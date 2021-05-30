@@ -654,29 +654,29 @@ def update_data(book_car_id, ctm_id, ctm_booking_duration, total, chosen_car):
                 for index in range(len(customer_id)):
                     if ctm_id == customer_id[index]:
                         booking_customer[i] = customer_name[index]
-                car_available[i] = "no"
-                ctm_key[i] = ctm_id
-                booking_payment[i] = total
-                booking_duration[i] = ctm_booking_duration
-                payment_year[i] = year[0]
-                payment_month[i] = month[0]
-                payment_day[i] = day[0]
-                cars_data = open("car.txt", "w")
-                # Use loop to rewrite car data in text file
-                for l in range(len(car_id)):
-                    cars_data.write(car_id[l]+",")
-                    cars_data.write(car_name[l]+",")
-                    cars_data.write(car_price[l]+",")
-                    cars_data.write(car_available[l]+",")
-                    cars_data.write(ctm_key[l]+",")
-                    cars_data.write(booking_customer[l]+",")
-                    cars_data.write(booking_payment[l]+",")
-                    cars_data.write(booking_duration[l]+",")
-                    cars_data.write(payment_year[l]+",")
-                    cars_data.write(payment_month[l]+",")
-                    cars_data.write(payment_day[l]+",")
-                    cars_data.write(car_details[l]+"\n")
-                cars_data.close()
+                        car_available[i] = "no"
+                        ctm_key[i] = ctm_id
+                        booking_payment[i] = total
+                        booking_duration[i] = ctm_booking_duration
+                        payment_year[i] = year[0]
+                        payment_month[i] = month[0]
+                        payment_day[i] = day[0]
+                        cars_data = open("car.txt", "w")
+                        # Use loop to rewrite car data in text file
+                        for l in range(len(car_id)):
+                            cars_data.write(car_id[l]+",")
+                            cars_data.write(car_name[l]+",")
+                            cars_data.write(car_price[l]+",")
+                            cars_data.write(car_available[l]+",")
+                            cars_data.write(ctm_key[l]+",")
+                            cars_data.write(booking_customer[l]+",")
+                            cars_data.write(booking_payment[l]+",")
+                            cars_data.write(booking_duration[l]+",")
+                            cars_data.write(payment_year[l]+",")
+                            cars_data.write(payment_month[l]+",")
+                            cars_data.write(payment_day[l]+",")
+                            cars_data.write(car_details[l]+"\n")
+                        cars_data.close()
 
 #-----------------------------------------Admin Functions---------------------------------------
 # Login to Access System.
@@ -997,7 +997,7 @@ def payment_specific_time():
     try:
         start_year,start_month, start_day = int(input("Start Year:")), int(input("Start Month:")), int(input("Start Day:"))
         end_year,end_month, end_day = int(input("End Year:")), int(input("End month:")), int(input("End day:"))
-        
+
     # Validate to ensure an integer is entered
     except ValueError:
         x = input('''
