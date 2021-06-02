@@ -563,7 +563,7 @@ def book_payment(book_car_id,ctm_id):
                     print(f"Total Payment: RM {total}")
                     # Prompt customer for their option
                     print('''
-                    What would you like to?
+                    What would you like to do?
                     [1]Confirm Payment
                     [2]Change Number Of Days To Rent The Car
                     [3]Back To View Details Of Cars Available for Rent
