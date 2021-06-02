@@ -557,7 +557,7 @@ def book_payment(book_car_id,ctm_id):
                 if (book_car_id == car_id[index]):
                     # Display information for payment
                     print("\nYour Credit Card Number: ", customer_card[i])
-                    total = (ctm_booking_duration) * int(car_price[index])
+                    total = ctm_booking_duration * int(car_price[index])
                     print(f"Car Name: {car_name[index].title()}")
                     print(f"Number of Days: {ctm_booking_duration}")
                     print(f"Total Payment: RM {total}")
