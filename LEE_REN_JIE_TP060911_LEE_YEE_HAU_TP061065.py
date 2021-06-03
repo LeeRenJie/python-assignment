@@ -398,8 +398,12 @@ def modify_customer_detail(ctm_id):
                     #validation to make sure customer enters a number
                     try:
                         new_card = int(input("\nWhat is your new card number(16 numbers): "))
-                        customer_card[i] = str(new_card)
-                        change_customer_data()
+                        if (len(str(new_card)) < 16) or (len(str(new_card)) > 16):
+                            print("Please enter only 16 numbers")
+                            modify_customer_detail(ctm_id)
+                        else:
+                            customer_card[i] = str(new_card)
+                            change_customer_data()
                     # Returns error if not an integer is entered
                     except ValueError:
                         print('''
