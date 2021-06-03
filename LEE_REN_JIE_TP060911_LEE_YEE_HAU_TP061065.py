@@ -243,6 +243,9 @@ def new_customer():
     #validation to make sure customer enters a number
     try:
         new_ctm_card = int(input("Your Credit Card Number: "))
+        if (len(str(new_ctm_card)) != 16):
+            print("Please enter only 16 numbers")
+            new_customer()
     # Returns error if not an integer is entered
     except ValueError:
         print('''
@@ -340,12 +343,10 @@ def registered_customer_menu(ctm_id):
 def modify_customer_detail(ctm_id):
     # Destructure number of lists returned from get_data function
     customer_id, customer_pass, customer_name, booked_car_name, customer_payment, customer_duration, customer_card = read_customer_data()
-    # Authenticate customer again to add security before allowing change of customer information
-    ctm_pass_input = input("\nTo modify your detail,\nPlease insert your password again: ")
 
     # Loop through to check if the customer_id is same with the login ID and customer password is for that customer
     for i in range(len(customer_id)):
-        if (ctm_id == customer_id[i]) and (ctm_pass_input == customer_pass[i]):
+        if ctm_id == customer_id[i]:
             # Display customer current details
             print("\nThis is your current detail:")
             print("ID:", customer_id[i])
@@ -398,7 +399,7 @@ def modify_customer_detail(ctm_id):
                     #validation to make sure customer enters a number
                     try:
                         new_card = int(input("\nWhat is your new card number(16 numbers): "))
-                        if (len(str(new_card)) < 16) or (len(str(new_card)) > 16):
+                        if (len(str(new_card)) != 16):
                             print("Please enter only 16 numbers")
                             modify_customer_detail(ctm_id)
                         else:
