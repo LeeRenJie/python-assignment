@@ -1090,7 +1090,7 @@ def specific_payment():
     criteria_customer = input("customer name: ")
     criteria_id = input("Booked Car Id: ")
 
-    print("\n--Records of Customer Booking is shown below--")
+    print("\n--Records of Customer Payment is shown below--")
     # Loop to search for similar data comparing txt file & input with (==/is equals to) operator
     for i in range(len(car_id)):
         if booking_customer[i].replace(" ","") == criteria_customer:
