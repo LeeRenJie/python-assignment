@@ -25,10 +25,8 @@ def main_menu():
     while True:
         if option == "1":
             customer_menu()
-            break
         elif option == "2":
             login_admin()
-            break
         # Exit program
         elif option == "3":
             quit()
