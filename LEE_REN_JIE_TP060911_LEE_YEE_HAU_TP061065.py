@@ -440,7 +440,7 @@ def rental_history(ctm_id):
                     print(f"Duration: {rental_duration[index]} days")
                     print(f"Rented On: {history_day[index]}-{history_month[index]}-{history_year[index]}\n")
                 # If no history found
-                if (ctm_history_id[index] != ctm_id) and (index == (len(ctm_history_id)-1)) :
+                elif (ctm_history_id[index] != ctm_id) and (index == (len(ctm_history_id)-1)) :
                     x = input('''
                     No Rental history is found
                     >>>Press Enter to return to Main Menu
