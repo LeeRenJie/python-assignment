@@ -25,10 +25,8 @@ def main_menu():
     while True:
         if option == "1":
             customer_menu()
-            break
         elif option == "2":
             login_admin()
-            break
         # Exit program
         elif option == "3":
             quit()
@@ -442,7 +440,7 @@ def rental_history(ctm_id):
                     print(f"Duration: {rental_duration[index]} days")
                     print(f"Rented On: {history_day[index]}-{history_month[index]}-{history_year[index]}\n")
                 # If no history found
-                if (ctm_history_id[index] != ctm_id) and (index == (len(ctm_history_id)-1)) :
+                elif (ctm_history_id[index] != ctm_id) and (index == (len(ctm_history_id)-1)) :
                     x = input('''
                     No Rental history is found
                     >>>Press Enter to return to Main Menu
@@ -510,7 +508,7 @@ def book_car(ctm_id):
         "\nTo book a car,\nPlease insert the Car ID: ")
     # Loop through car text file to find the data for that specific car
     for i in range(len(car_id)):
-        if (book_car_id == car_id[i]):
+        if (book_car_id == car_id[i] and car_available[i] == "yes"):
             # Display details of car
             print("\nThis is the details of the car chosen:")
             print((car_details[i].replace(" ", "\n").title()).replace("Price:", "Price Per Day:RM"))
@@ -536,7 +534,8 @@ def book_car(ctm_id):
                 # Validate user's input if none of the option is entered
                 else:
                     booking_option= input("Please Enter Your Option: ")
-
+        elif (car_available[i] == "no" and car_id[i] == book_car_id):
+            print("\nCar is not available for rent or does not exist")
 
 # Do payment to confirm booking.
 def book_payment(book_car_id,ctm_id):
