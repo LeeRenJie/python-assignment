@@ -612,6 +612,7 @@ def update_data(book_car_id, ctm_id, ctm_booking_duration, total, chosen_car):
     # Append each data into a list
     date_list = str(date.today()).split("-")
     year.append(date_list[0])
+    #use if comparison to avoid error for leading zeroes of month
     if date_list[1] == "10":
         month.append(str(date_list[1]))
     else:
@@ -1019,6 +1020,7 @@ def payment_specific_time():
     print("\n---All Payments between "  + str(start_date) + " and " + str(end_date) + "---")
     # Loop through txt file to find match date
     for i in range(len(car_id)):
+        #Use If comparison to avoid error for data that has no payment date
         if payment_month[i] != "none":
             # Turn datatype of data from str into int
             check_year = int(payment_year[i])
