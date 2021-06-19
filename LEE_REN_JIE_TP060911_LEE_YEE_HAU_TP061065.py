@@ -499,7 +499,7 @@ def view_car_details(ctm_id):
             ctm_option= input("Please Enter Your Option: ")
 
 
-# v. Select and Book a car for a specific duration.
+# Select and Book a car for a specific duration.
 def book_car(ctm_id):
     # Destructure number of lists returned from get_data function
     car_id, car_name, car_price, car_available, ctm_key, booking_customer, booking_payment, booking_duration, payment_year, payment_month, payment_day, car_details = read_car_data()
@@ -597,7 +597,7 @@ def book_payment(book_car_id,ctm_id):
                         else:
                             payment_option= input("Please Enter Your Option: ")
 
-
+# Update data after payment
 def update_data(book_car_id, ctm_id, ctm_booking_duration, total, chosen_car):
     # Destructure number of lists returned from get_data function
     customer_id, customer_pass, customer_name, booked_car_name, customer_payment, customer_duration, customer_card = read_customer_data()
