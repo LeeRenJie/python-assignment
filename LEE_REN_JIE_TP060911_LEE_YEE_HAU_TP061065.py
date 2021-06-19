@@ -242,7 +242,7 @@ def new_customer():
     try:
         new_ctm_card = int(input("Your Credit Card Number: "))
         if (len(str(new_ctm_card)) != 16):
-            print("Please enter only 16 numbers")
+            print("Please enter only 16 numbers\n")
             new_customer()
     # Returns error if not an integer is entered
     except ValueError:
