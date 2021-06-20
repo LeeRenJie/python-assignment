@@ -12,7 +12,7 @@ def main_menu():
     print(date.today())
     # Display options for end users
     print('''
-    -------Who are you?-------\n
+    -------Super Car Rental Service-------\n
     [1]Customer
     [2]Admin
     [3]Exit\n
